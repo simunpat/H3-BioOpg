@@ -90,7 +90,6 @@ public class AppDbContext : DbContext
             e.ToTable("booking_items");
             e.HasKey(i => i.Id);
             e.Property(i => i.Id).ValueGeneratedOnAdd();
-            e.Property(i => i.Name).HasMaxLength(200);
             e.HasOne<Booking>()
                 .WithMany(b => b.Items)
                 .HasForeignKey(i => i.BookingId)

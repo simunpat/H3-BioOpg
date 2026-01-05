@@ -1,0 +1,31 @@
+<nav class="app-nav">
+    <div class="container">
+        <a routerLink="/" class="brand" aria-label="Home">
+            <img src="/logo.png" alt="Home" />
+        </a>
+
+        <span class="spacer"></span>
+
+        <ng-container *ngIf="auth.role() === 'Admin'">
+            <a routerLink="/admin/movies">Movies</a>
+
+            <a routerLink="/admin/screenings">Screenings</a>
+
+            <a routerLink="/admin/auditoriums">Auditoriums</a>
+
+            <a routerLink="/admin/users">Users</a>
+
+            <a routerLink="/hack/sql">SQL Injection</a>
+        </ng-container>
+
+        <a *ngIf="!auth.isAuthenticated()" routerLink="/register">Create Account</a>
+
+        <a *ngIf="!auth.isAuthenticated()" routerLink="/login">Login</a>
+
+        <a *ngIf="auth.isAuthenticated()" href="" (click)="$event.preventDefault(); auth.logout()"
+            >Logout</a
+        >
+    </div>
+</nav>
+
+<router-outlet />

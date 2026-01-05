@@ -1,0 +1,47 @@
+<section class="container">
+    <h1 class="page-title">Admin: Movies</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Poster</th>
+
+                <th>Title</th>
+
+                <th>Genre</th>
+
+                <th>Duration</th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let m of movies()">
+                <td>
+                    <div class="image-container">
+                        <img [src]="posterUrl(m)" [alt]="m.title + ' poster'" class="image" />
+                    </div>
+                </td>
+
+                <td>{{ m.title }}</td>
+
+                <td>{{ m.genre }}</td>
+
+                <td>{{ m.durationMin }}</td>
+
+                <td>
+                    <div class="button-container">
+                        <a class="btn btn-secondary" [routerLink]="['/movies', m.id]">View</a>
+                        <a class="btn" [routerLink]="['/admin/movies', m.id, 'edit']">Edit</a>
+                        <a class="btn btn-warn" (click)="remove(m.id)">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="add-new--container">
+        <a class="btn btn-primary" [routerLink]="['/admin/movies/new']">Add New</a>
+    </div>
+</section>

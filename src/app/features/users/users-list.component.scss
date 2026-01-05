@@ -1,0 +1,34 @@
+.container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-title {
+    margin: 0 0 1rem 0;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+        vertical-align: middle;
+        padding: 0.5rem 0.625rem;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        height: 100%;
+    }
+}
+
+.add-new--container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}

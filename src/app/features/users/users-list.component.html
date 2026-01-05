@@ -1,0 +1,29 @@
+<section class="container">
+    <h1 class="page-title">Admin: Users</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of users">
+                <td>{{ u.email }}</td>
+                <td>{{ u.role }}</td>
+                <td>
+                    <div class="button-container">
+                        <a class="btn" [routerLink]="['/admin/users', u.id, 'edit']">Edit</a>
+                        <a class="btn btn-warn" (click)="remove(u)">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="add-new--container">
+        <a class="btn btn-primary" [routerLink]="['/admin/users/new']">Add New</a>
+    </div>
+</section>

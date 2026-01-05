@@ -1,0 +1,68 @@
+<section class="container">
+    <h1 class="page-title">Admin: Screenings</h1>
+
+    <form (ngSubmit)="add()" class="form">
+        <div class="field-container">
+            <label class="field">
+                <span class="label">Movie</span>
+
+                <select class="input" name="movieId" [(ngModel)]="form.movieId" required>
+                    <option *ngFor="let m of movies()" [value]="m.id">{{ m.title }}</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span class="label">Auditorium</span>
+
+                <select class="input" name="auditoriumId" [(ngModel)]="form.auditoriumId" required>
+                    <option *ngFor="let a of auditoriums()" [value]="a.id">{{ a.name }}</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span class="label">Date & Time</span>
+
+                <input
+                    class="input"
+                    type="datetime-local"
+                    name="start"
+                    [(ngModel)]="form.startLocal"
+                    required
+                />
+            </label>
+
+            <label class="field">
+                <span class="label">Price</span>
+
+                <input class="input" type="number" name="price" [(ngModel)]="form.price" required />
+            </label>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th (click)="toggleSort('movie')">Movie</th>
+                <th (click)="toggleSort('auditorium')">Auditorium</th>
+                <th (click)="toggleSort('startTime')">Start</th>
+                <th (click)="toggleSort('price')">Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let s of sorted()">
+                <td>{{ movieTitle(s.movieId) }}</td>
+                <td>{{ auditoriumName(s.auditoriumId) }}</td>
+                <td>{{ formatDateTime(s.startTime) }}</td>
+                <td>{{ s.price }}</td>
+                <td>
+                    <button class="btn btn-warn" type="button" (click)="remove(s.id)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

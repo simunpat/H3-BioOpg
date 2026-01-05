@@ -1,0 +1,55 @@
+<section class="container">
+    <ng-container *ngIf="movie() as m; else loadingTpl">
+        <div class="hero">
+            <img
+                *ngIf="m.posterUrl; else fallbackPoster"
+                class="poster"
+                [src]="m.posterUrl"
+                [alt]="m.title + ' poster'"
+            />
+
+            <ng-template #fallbackPoster>
+                <img
+                    class="poster"
+                    src="/uploads/posters/template-poster.png"
+                    [alt]="m.title + ' poster'"
+                />
+            </ng-template>
+
+            <div class="meta">
+                <h1 class="title">{{ m.title }}</h1>
+
+                <p class="subtitle">
+                    <strong>Genre:</strong> {{ m.genre }} • <strong>Duration:</strong>
+                    {{ m.durationMin }} min
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Screenings (next 7 days)</h2>
+
+        <div class="days-grid">
+            <div class="day-col" *ngFor="let d of days(); index as i">
+                <div class="day-header">
+                    {{ dayLabel(d, i) }}
+                </div>
+
+                <div class="day-body">
+                    <a
+                        class="screening-card"
+                        *ngFor="let s of screeningsByDay()[i]"
+                        [routerLink]="['/screenings', s.id, 'book']"
+                    >
+                        <div class="screening-time">{{ formatTime(s.startTime) }}</div>
+
+                        <div class="screening-aud">{{ auditoriumName(s.auditoriumId) }}</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #loadingTpl>
+        <p>Loading movie...</p>
+    </ng-template>
+</section>

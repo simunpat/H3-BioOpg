@@ -1,0 +1,662 @@
+{
+  "movies": [
+    {
+      "id": "0f2f4b0d-0b1f-4c94-9b7a-2b2a3a3ce3c1",
+      "title": "The Quantum Heist",
+      "durationMin": 125,
+      "genre": "Sci-Fi",
+      "posterUrl": "/uploads/posters/1763981651452_ChatGPT_Image_Nov_24__2025__09_25_54_AM.png"
+    },
+    {
+      "id": "53b0197d-b9db-4a86-9bdf-1b9a8e6f7a63",
+      "title": "Midnight Bistro",
+      "durationMin": 108,
+      "genre": "Drama",
+      "posterUrl": "/uploads/posters/1763981643692_ChatGPT_Image_Nov_24__2025__11_53_23_AM.png"
+    },
+    {
+      "id": "6c0f3d5e-0f98-4f12-97a7-13f88b95d6ec",
+      "title": "Neon Knights",
+      "durationMin": 116,
+      "genre": "Action",
+      "posterUrl": "/uploads/posters/1763984975091_ChatGPT_Image_Nov_24__2025__12_49_20_PM.png"
+    },
+    {
+      "id": "b44c7c85-5a57-4d8e-b2c9-2b43a1c3ed53",
+      "title": "Whispers in Winter",
+      "durationMin": 102,
+      "genre": "Mystery"
+    },
+    {
+      "id": "a8199a4a-343a-4d5c-9a57-5e1f3b1e89b2",
+      "title": "Orbit 9",
+      "durationMin": 131,
+      "genre": "Sci-Fi"
+    },
+    {
+      "id": "c2a25da5-2f1c-4eaf-9e23-5a79cd35b1d9",
+      "title": "Greenfields",
+      "durationMin": 99,
+      "genre": "Romance"
+    },
+    {
+      "id": "5d62b91f-1231-4e3d-abcd-6ea4424b5d52",
+      "title": "Test",
+      "durationMin": 121,
+      "genre": "Horror"
+    },
+    {
+      "id": "e50a7c2e-b1a8-4b2a-9fda-5018dbb0d5a1",
+      "title": "Crimson Harbor",
+      "durationMin": 112,
+      "genre": "Thriller"
+    },
+    {
+      "id": "9b4f3a62-0e71-4c63-a9a4-8f9479d8e7b2",
+      "title": "Starlight Echoes",
+      "durationMin": 127,
+      "genre": "Sci-Fi",
+      "posterUrl": "/uploads/posters/template-poster.png"
+    },
+    {
+      "id": "a3d7c9e0-2f51-4b30-8bfa-2b55f1d8c4e3",
+      "title": "Forgotten Valley",
+      "durationMin": 104,
+      "genre": "Adventure"
+    },
+    {
+      "id": "c7f0b6d2-4d1a-4d32-9e70-3a78e2a1b9d5",
+      "title": "Paper Lanterns",
+      "durationMin": 98,
+      "genre": "Drama"
+    },
+    {
+      "id": "d2a19f73-7b2e-4e3f-a6e1-d4b01f6c2a19",
+      "title": "Rogue Frequency",
+      "durationMin": 115,
+      "genre": "Action"
+    },
+    {
+      "id": "f8b6e4a1-2c3d-4f8a-9a2b-1c2d3e4f5a6b",
+      "title": "Midnight Cartographer",
+      "durationMin": 109,
+      "genre": "Mystery"
+    },
+    {
+      "id": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "title": "Sunset Over Atlas",
+      "durationMin": 122,
+      "genre": "Adventure",
+      "posterUrl": "/uploads/posters/1763981651452_ChatGPT_Image_Nov_24__2025__09_25_54_AM.png"
+    },
+    {
+      "id": "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+      "title": "Velvet Mirage",
+      "durationMin": 101,
+      "genre": "Romance"
+    },
+    {
+      "id": "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+      "title": "Iron Cliffs",
+      "durationMin": 134,
+      "genre": "Action"
+    },
+    {
+      "id": "4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a",
+      "title": "The Glass Chronicle",
+      "durationMin": 118,
+      "genre": "Drama",
+      "posterUrl": "/uploads/posters/1763984975091_ChatGPT_Image_Nov_24__2025__12_49_20_PM.png"
+    },
+    {
+      "id": "5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b",
+      "title": "Night Market Tales",
+      "durationMin": 96,
+      "genre": "Comedy",
+      "posterUrl": "/uploads/posters/1764329182864_ChatGPT_Image_Nov_24__2025__12_49_20_PM.png"
+    },
+    {
+      "id": "6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c",
+      "title": "Orbit of Ashes",
+      "durationMin": 129,
+      "genre": "Sci-Fi",
+      "posterUrl": "/uploads/posters/1763981643692_ChatGPT_Image_Nov_24__2025__11_53_23_AM.png"
+    }
+  ],
+  "auditoriums": [
+    {
+      "id": "7f9b221e-3d18-4e1a-8a5a-4a0f1a9dd829",
+      "name": "Alpha",
+      "rows": 10,
+      "cols": 12
+    },
+    {
+      "id": "e1a0be96-7013-4e70-b2d7-1b745dafc5c4",
+      "name": "Beta",
+      "rows": 12,
+      "cols": 14
+    }
+  ],
+  "screenings": [
+    {
+      "id": "9f8aaf45-fb1a-4c74-8f2a-6fc0b2e2ff2b",
+      "movieId": "0f2f4b0d-0b1f-4c94-9b7a-2b2a3a3ce3c1",
+      "auditoriumId": "7f9b221e-3d18-4e1a-8a5a-4a0f1a9dd829",
+      "startTime": "2025-11-21T18:00:00.000Z",
+      "price": 110
+    },
+    {
+      "id": "e8a9c2b7-6d6e-4d2f-b3e3-3dc9c9d5a1a7",
+      "movieId": "0f2f4b0d-0b1f-4c94-9b7a-2b2a3a3ce3c1",
+      "auditoriumId": "e1a0be96-7013-4e70-b2d7-1b745dafc5c4",
+      "startTime": "2025-11-22T20:30:00.000Z",
+      "price": 120
+    },
+    {
+      "id": "13d6c0b5-9f24-4af7-af0a-8d0df9f9c5c4",
+      "movieId": "6c0f3d5e-0f98-4f12-97a7-13f88b95d6ec",
+      "auditoriumId": "7f9b221e-3d18-4e1a-8a5a-4a0f1a9dd829",
+      "startTime": "2025-11-22T17:15:00.000Z",
+      "price": 115
+    },
+    {
+      "id": "4b2c59a0-1f6a-4a1a-9dbe-0d3f4f7a2f9e",
+      "movieId": "a8199a4a-343a-4d5c-9a57-5e1f3b1e89b2",
+      "auditoriumId": "e1a0be96-7013-4e70-b2d7-1b745dafc5c4",
+      "startTime": "2025-11-23T19:45:00.000Z",
+      "price": 125
+    },
+    {
+      "id": "1205db71-fbb9-4875-a45f-3ecbd61d4a7d",
+      "movieId": "6c0f3d5e-0f98-4f12-97a7-13f88b95d6ec",
+      "auditoriumId": "e1a0be96-7013-4e70-b2d7-1b745dafc5c4",
+      "startTime": "2025-11-28T21:22:00.000Z",
+      "price": 122
+    },
+    {
+      "id": "7dd06875-5f21-4f3d-97ab-48c03509bbcc",
+      "movieId": "0f2f4b0d-0b1f-4c94-9b7a-2b2a3a3ce3c1",
+      "auditoriumId": "7f9b221e-3d18-4e1a-8a5a-4a0f1a9dd829",
+      "startTime": "2025-11-27T09:22:00.000Z",
+      "price": 120
+    },
+    {
+      "id": "c89b20eb-35d1-4cc6-b25f-b77ead7be687",
+      "movieId": "0f2f4b0d-0b1f-4c94-9b7a-2b2a3a3ce3c1",
+      "auditoriumId": "e1a0be96-7013-4e70-b2d7-1b745dafc5c4",
+      "startTime": "2025-11-26T23:00:00.000Z",
+      "price": 150
+    },
+    {
+      "id": "f264a155-9f28-4188-9873-581743b19fd8",
+      "movieId": "0f2f4b0d-0b1f-4c94-9b7a-2b2a3a3ce3c1",
+      "auditoriumId": "7f9b221e-3d18-4e1a-8a5a-4a0f1a9dd829",
+      "startTime": "2025-11-27T20:00:00.000Z",
+      "price": 120
+    },
+    {
+      "id": "41f6ce53-704b-494b-b586-d5f70ce9c78f",
+      "movieId": "0f2f4b0d-0b1f-4c94-9b7a-2b2a3a3ce3c1",
+      "auditoriumId": "e1a0be96-7013-4e70-b2d7-1b745dafc5c4",
+      "startTime": "2025-11-27T14:00:00.000Z",
+      "price": 150
+    }
+  ],
+  "bookings": [
+    {
+      "id": "0248cdba-07a0-4ed4-a4b2-35df850417cc",
+      "screeningId": "e8a9c2b7-6d6e-4d2f-b3e3-3dc9c9d5a1a7",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 3,
+          "number": 8
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 1
+        }
+      ],
+      "totalPrice": 120
+    },
+    {
+      "id": "a7e5c335-13af-4ca9-87f2-438bf2e72d82",
+      "screeningId": "e8a9c2b7-6d6e-4d2f-b3e3-3dc9c9d5a1a7",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 4,
+          "number": 5
+        },
+        {
+          "row": 4,
+          "number": 6
+        },
+        {
+          "row": 4,
+          "number": 7
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 3
+        }
+      ],
+      "totalPrice": 360
+    },
+    {
+      "id": "f6e608fc-e5b7-4669-855c-75cd9ab2439d",
+      "screeningId": "9f8aaf45-fb1a-4c74-8f2a-6fc0b2e2ff2b",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 6,
+          "number": 4
+        },
+        {
+          "row": 6,
+          "number": 5
+        },
+        {
+          "row": 6,
+          "number": 7
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 3
+        }
+      ],
+      "totalPrice": 330
+    },
+    {
+      "id": "39952538-5d6d-4305-81f2-e3bc9fb6c2a4",
+      "screeningId": "4b2c59a0-1f6a-4a1a-9dbe-0d3f4f7a2f9e",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 9,
+          "number": 5
+        },
+        {
+          "row": 9,
+          "number": 6
+        },
+        {
+          "row": 9,
+          "number": 7
+        },
+        {
+          "row": 9,
+          "number": 8
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 4
+        }
+      ],
+      "totalPrice": 500
+    },
+    {
+      "id": "8e39fefb-e96d-4425-a11a-b40ed664d852",
+      "screeningId": "13d6c0b5-9f24-4af7-af0a-8d0df9f9c5c4",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 4,
+          "number": 5
+        },
+        {
+          "row": 4,
+          "number": 6
+        },
+        {
+          "row": 4,
+          "number": 7
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 3
+        }
+      ],
+      "totalPrice": 345
+    },
+    {
+      "id": "aebb98be-65d9-44b2-ae45-c29d1f5ebc02",
+      "screeningId": "9f8aaf45-fb1a-4c74-8f2a-6fc0b2e2ff2b",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 6,
+          "number": 6
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 1
+        }
+      ],
+      "totalPrice": 110
+    },
+    {
+      "id": "ce7a41cb-cdae-45b3-a977-e89c7b19540c",
+      "screeningId": "13d6c0b5-9f24-4af7-af0a-8d0df9f9c5c4",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 7,
+          "number": 6
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 1
+        }
+      ],
+      "totalPrice": 115
+    },
+    {
+      "id": "b11ee5ac-ff26-4386-94f6-b821ae7988ac",
+      "screeningId": "7dd06875-5f21-4f3d-97ab-48c03509bbcc",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 3,
+          "number": 6
+        },
+        {
+          "row": 3,
+          "number": 7
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "name": "Adult",
+          "qty": 1
+        },
+        {
+          "ticketTypeId": "f3b2c1d4-5e6f-4a7b-8c9d-0a1b2c3d4e5f",
+          "name": "Child (under 12)",
+          "qty": 1
+        }
+      ],
+      "totalPrice": 192
+    },
+    {
+      "id": "22410d5e-a2a7-46dd-b09f-dec66c2f3b76",
+      "screeningId": "7dd06875-5f21-4f3d-97ab-48c03509bbcc",
+      "userId": "2153115a-32f4-4696-9fef-1b4c2df4c4ef",
+      "seats": [
+        {
+          "row": 5,
+          "number": 1
+        },
+        {
+          "row": 5,
+          "number": 2
+        },
+        {
+          "row": 5,
+          "number": 3
+        },
+        {
+          "row": 5,
+          "number": 4
+        },
+        {
+          "row": 5,
+          "number": 5
+        },
+        {
+          "row": 5,
+          "number": 6
+        },
+        {
+          "row": 5,
+          "number": 7
+        },
+        {
+          "row": 5,
+          "number": 8
+        },
+        {
+          "row": 5,
+          "number": 9
+        },
+        {
+          "row": 5,
+          "number": 10
+        },
+        {
+          "row": 5,
+          "number": 11
+        },
+        {
+          "row": 5,
+          "number": 12
+        },
+        {
+          "row": 6,
+          "number": 12
+        },
+        {
+          "row": 6,
+          "number": 11
+        },
+        {
+          "row": 6,
+          "number": 10
+        },
+        {
+          "row": 6,
+          "number": 9
+        },
+        {
+          "row": 6,
+          "number": 8
+        },
+        {
+          "row": 6,
+          "number": 7
+        },
+        {
+          "row": 6,
+          "number": 6
+        },
+        {
+          "row": 6,
+          "number": 5
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "qty": 10
+        },
+        {
+          "ticketTypeId": "f3b2c1d4-5e6f-4a7b-8c9d-0a1b2c3d4e5f",
+          "qty": 10
+        }
+      ],
+      "totalPrice": 1920
+    },
+    {
+      "id": "77088d3c-7ee1-4206-b70c-d1d8beec1908",
+      "screeningId": "7dd06875-5f21-4f3d-97ab-48c03509bbcc",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 8,
+          "number": 7
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "qty": 1
+        }
+      ],
+      "totalPrice": 120
+    },
+    {
+      "id": "d630ec3f-a38b-4af0-8e08-e58e53599d3c",
+      "screeningId": "7dd06875-5f21-4f3d-97ab-48c03509bbcc",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 2,
+          "number": 9
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "qty": 1
+        }
+      ],
+      "totalPrice": 120
+    },
+    {
+      "id": "8d37aaee-6a37-4991-8e2e-946cc1163c8a",
+      "screeningId": "c89b20eb-35d1-4cc6-b25f-b77ead7be687",
+      "userId": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "seats": [
+        {
+          "row": 6,
+          "number": 8
+        },
+        {
+          "row": 6,
+          "number": 9
+        },
+        {
+          "row": 6,
+          "number": 10
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "qty": 1
+        },
+        {
+          "ticketTypeId": "f3b2c1d4-5e6f-4a7b-8c9d-0a1b2c3d4e5f",
+          "qty": 2
+        }
+      ],
+      "totalPrice": 330
+    },
+    {
+      "id": "b5566667-2a95-45ab-8645-6621763f6d1f",
+      "screeningId": "1205db71-fbb9-4875-a45f-3ecbd61d4a7d",
+      "userId": "1fa41231-cc27-48ca-83a2-b1ed14ba2871",
+      "seats": [
+        {
+          "row": 6,
+          "number": 8
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "qty": 1
+        }
+      ],
+      "totalPrice": 122
+    },
+    {
+      "id": "2a3ce4b8-8056-46d2-8685-4882c79db8b6",
+      "screeningId": "1205db71-fbb9-4875-a45f-3ecbd61d4a7d",
+      "userId": "1fa41231-cc27-48ca-83a2-b1ed14ba2871",
+      "seats": [
+        {
+          "row": 5,
+          "number": 6
+        },
+        {
+          "row": 5,
+          "number": 7
+        },
+        {
+          "row": 5,
+          "number": 8
+        },
+        {
+          "row": 5,
+          "number": 9
+        }
+      ],
+      "items": [
+        {
+          "ticketTypeId": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+          "qty": 2
+        },
+        {
+          "ticketTypeId": "f3b2c1d4-5e6f-4a7b-8c9d-0a1b2c3d4e5f",
+          "qty": 2
+        }
+      ],
+      "totalPrice": 390
+    }
+  ],
+  "ticketTypes": [
+    {
+      "id": "d1a7f5e0-2a9c-4c52-9f6b-1eacb3f7a012",
+      "name": "Adult",
+      "multiplier": 1
+    },
+    {
+      "id": "f3b2c1d4-5e6f-4a7b-8c9d-0a1b2c3d4e5f",
+      "name": "Child (under 12)",
+      "multiplier": 0.6
+    }
+  ],
+  "users": [
+    {
+      "id": "990610e1-9d38-41f6-a8a1-ef7df515f1dc",
+      "email": "test@test.test",
+      "role": "Admin",
+      "passwordHash": "27aca0ecd35b29530e2842dd5505737a3ac30ee41e49fdee9ed4bdb5d3c76a7e",
+      "passwordSalt": "e357dc6e-24ec-427d-ad12-65e4ae4604ca"
+    },
+    {
+      "id": "2153115a-32f4-4696-9fef-1b4c2df4c4ef",
+      "email": "sn@lunnar.fo",
+      "role": "Admin",
+      "passwordHash": "dbbd4fd39918e8ab6e88cb8d24d175787cc05cb7df706952743bd4d62461f4fb",
+      "passwordSalt": "d2d09e62-e044-4f88-aae0-29932e3a9443"
+    },
+    {
+      "id": "6324fba5-5159-4f0b-ad91-6a5ebeea184a",
+      "email": "ab@ab.ab",
+      "role": "Customer",
+      "passwordHash": "28f8d7da2be56e8cda362041d522fdb4557b568aca9d1c1b6a3f6f06021a9656",
+      "passwordSalt": "2ce8ce70-01d3-4543-bcf1-e2d09e5c55f0"
+    },
+    {
+      "id": "1fa41231-cc27-48ca-83a2-b1ed14ba2871",
+      "email": "oliver@tec.dk",
+      "role": "Customer",
+      "passwordHash": "6f6ed4749b0692cb0c40526a2aa9afe711a94936593ccf57857989bbeee9cb4d",
+      "passwordSalt": "d2839be3-41a4-4846-b164-4dc51102bc20"
+    }
+  ]
+}

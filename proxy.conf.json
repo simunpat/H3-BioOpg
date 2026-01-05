@@ -1,0 +1,23 @@
+{
+    "/api": {
+        "target": "http://api:5099",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/hackapi": {
+        "target": "http://api:5099",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": { "^/hackapi": "" }
+    },
+    "/upload": {
+        "target": "http://upload:3001",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/uploads": {
+        "target": "http://upload:3001",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

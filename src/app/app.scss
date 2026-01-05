@@ -1,0 +1,39 @@
+/* Header link styling */
+.app-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    height: 3.25rem;
+    width: 100%;
+
+    .container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .spacer {
+        flex: 1 1 auto;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+
+        &:visited {
+            color: #000;
+        }
+    }
+
+    .brand {
+        img {
+            display: block;
+            height: 32px;
+            width: auto;
+        }
+    }
+}

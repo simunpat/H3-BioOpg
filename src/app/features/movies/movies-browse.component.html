@@ -1,0 +1,46 @@
+<section class="container">
+    <div class="search-wrap">
+        <input
+            class="search-input"
+            type="text"
+            placeholder="Search by title or genre..."
+            [ngModel]="query()"
+            (ngModelChange)="onQueryChange($event)"
+        />
+    </div>
+
+    <div class="grid">
+        <div class="card" *ngFor="let m of movies()">
+            <div class="card-inner">
+                <div class="image-container">
+                    <img
+                        class="poster"
+                        [src]="posterUrl(m)"
+                        [alt]="m.title + ' poster'"
+                        width="220"
+                        height="330"
+                    />
+                </div>
+
+                <div class="meta">
+                    <div class="title">{{ m.title }}</div>
+                    <a
+                        class="btn btn-primary"
+                        [routerLink]="['/movies', m.id]"
+                        aria-label="Buy tickets for {{ m.title }}"
+                    >
+                        <img class="icon" src="/icons/ticket.svg" alt="" />
+                        Buy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        style="display: flex; justify-content: center; margin-top: 16px"
+        *ngIf="!showAll() && allResults().length > 10"
+    >
+        <a class="btn btn-secondary" (click)="viewMore()">View more</a>
+    </div>
+</section>

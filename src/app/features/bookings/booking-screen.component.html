@@ -1,0 +1,65 @@
+<section>
+    <h1>Book tickets</h1>
+
+    <ng-container *ngIf="screening() as s; else loadingTpl">
+        <p>
+            Movie: <strong>{{ s.movieId }}</strong> • Auditorium:
+            <strong>{{ s.auditoriumId }}</strong> • Start:
+            <strong>{{ formatDateTime(s.startTime) }}</strong> • Price:
+            <strong>{{ s.price }} DKK</strong>
+        </p>
+
+        <form
+            (ngSubmit)="$event.preventDefault()"
+            style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin: 8px 0"
+        >
+            <ng-container *ngFor="let tt of ticketTypes()">
+                <label class="field">
+                    <span class="label">{{ tt.name }}</span>
+                    <input
+                        class="input"
+                        type="number"
+                        min="0"
+                        name="qty-{{ tt.id }}"
+                        [(ngModel)]="typeCounts[tt.id]"
+                        required
+                    />
+                </label>
+            </ng-container>
+            <span>
+                Selected: <strong>{{ selectedSize() }}</strong> /
+                <strong>{{ totalTickets() }}</strong>
+            </span>
+            <span style="flex: 1 1 auto"></span>
+            <button
+                class="btn btn-primary"
+                type="button"
+                (click)="confirm()"
+                [disabled]="!validTickets() || selectedSize() !== totalTickets()"
+            >
+                Confirm booking ({{ totalPrice() }} DKK)
+            </button>
+        </form>
+
+        <div class="seat-grid" [style.gridTemplateColumns]="'repeat(' + cols + ', 36px)'">
+            <button
+                class="seat-btn"
+                *ngFor="let seat of seats()"
+                [class.occupied]="isOccupied(seat.id)"
+                [class.selected]="isSelected(seat.id)"
+                [disabled]="isOccupied(seat.id)"
+                (click)="toggleSeat(seat.id)"
+                [attr.aria-label]="'Seat ' + seat.row + '-' + seat.number"
+                [title]="'Row ' + seat.row + ', Seat ' + seat.number"
+            >
+                <svg class="seat-svg" viewBox="0 0 32 26" aria-hidden="true">
+                    <use href="/icons/seat.svg#seat"></use>
+                </svg>
+            </button>
+        </div>
+    </ng-container>
+
+    <ng-template #loadingTpl>
+        <p>Loading screening...</p>
+    </ng-template>
+</section>

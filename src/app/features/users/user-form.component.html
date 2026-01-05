@@ -1,0 +1,43 @@
+<section class="container">
+    <h1 class="page-title">{{ editingId ? 'Edit User' : 'Add User' }}</h1>
+
+    <form (ngSubmit)="save()" class="form">
+        <div class="field-container">
+            <label class="field">
+                <span class="label">Email</span>
+
+                <input class="input" type="email" name="email" [(ngModel)]="form.email" required />
+            </label>
+
+            <label class="field">
+                <span class="label">Role</span>
+
+                <select class="input" name="role" [(ngModel)]="form.role" required>
+                    <option [ngValue]="'Admin'">Admin</option>
+
+                    <option [ngValue]="'Customer'">Customer</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span class="label">{{ editingId ? 'New password (optional)' : 'Password' }}</span>
+
+                <input
+                    class="input"
+                    type="password"
+                    name="password"
+                    [(ngModel)]="form.password"
+                    [required]="!editingId"
+                />
+            </label>
+        </div>
+
+        <div class="button-container">
+            <a class="btn btn-secondary" (click)="cancel()">Cancel</a>
+
+            <button class="btn btn-primary" type="submit">
+                {{ editingId ? 'Save' : 'Create' }}
+            </button>
+        </div>
+    </form>
+</section>

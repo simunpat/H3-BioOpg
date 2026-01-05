@@ -1,0 +1,48 @@
+<section class="container">
+    <h1 class="page-title">Admin: Auditoriums</h1>
+
+    <form (ngSubmit)="add()" class="form">
+        <div class="field-container">
+            <label class="field">
+                <span class="label">Name</span>
+
+                <input class="input" name="name" [(ngModel)]="form.name" required />
+            </label>
+
+            <label class="field">
+                <span class="label">Rows</span>
+
+                <input class="input" type="number" name="rows" [(ngModel)]="form.rows" required />
+            </label>
+
+            <label class="field">
+                <span class="label">Cols</span>
+
+                <input class="input" type="number" name="cols" [(ngModel)]="form.cols" required />
+            </label>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let a of auditoriums()">
+                <td>{{ a.name }}</td>
+                <td>{{ a.rows }} × {{ a.cols }}</td>
+                <td>
+                    <button class="btn btn-warn" type="button" (click)="remove(a.id)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

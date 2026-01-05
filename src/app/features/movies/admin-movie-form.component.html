@@ -1,0 +1,40 @@
+<section class="container">
+    <h1 class="page-title">{{ editingId ? 'Edit Movie' : 'Add Movie' }}</h1>
+
+    <form (ngSubmit)="save()" class="form">
+        <div class="field-container">
+            <label class="field">
+                <span class="label">Title</span>
+                <input class="input" name="title" [(ngModel)]="form.title" required />
+            </label>
+
+            <label class="field">
+                <span class="label">Genre</span>
+                <input class="input" name="genre" [(ngModel)]="form.genre" required />
+            </label>
+
+            <label class="field">
+                <span class="label">Duration (min)</span>
+                <input
+                    class="input"
+                    type="number"
+                    name="durationMin"
+                    [(ngModel)]="form.durationMin"
+                    required
+                />
+            </label>
+        </div>
+
+        <div id="poster-dropzone" class="dropzone">
+            <div class="dz-message">Drop poster here or click to upload</div>
+        </div>
+
+        <div class="button-container">
+            <a class="btn btn-secondary" (click)="cancel()">Cancel</a>
+
+            <button class="btn btn-primary" type="submit">
+                {{ editingId ? 'Save' : 'Create' }}
+            </button>
+        </div>
+    </form>
+</section>

@@ -1,4 +1,4 @@
-.PHONY: help up down restart logs logs-web ps rebuild-api urls open clean seed
+.PHONY: help up down restart logs logs-web ps rebuild-api urls open clean seed dotnet dotnet-restore dotnet-build
 
 help:
 	@echo "Available targets:"
@@ -13,6 +13,9 @@ help:
 	@echo "  make open        - Open key URLs in your browser (macOS)"
 	@echo "  make clean       - Down and remove volumes (DANGEROUS: wipes DB/uploads)"
 	@echo "  make seed        - Run migrations and seed DB in one-off API container"
+	@echo "  make dotnet      - Locally restore/build .NET
+	@echo "  make dotnet-restore - dotnet restore Backend/BiografWeb.sln"
+	@echo "  make dotnet-build   - dotnet build Backend/BiografWeb.sln -c Debug"
 
 up:
 	@docker compose up -d --wait
@@ -66,4 +69,14 @@ seed:
 		-e Logging__LogLevel__Microsoft.EntityFrameworkCore.Database.Command=Warning \
 		-e Logging__LogLevel__Microsoft.EntityFrameworkCore.Migrations=Warning \
 		api
+
+dotnet:
+	@$(MAKE) dotnet-restore
+	@$(MAKE) dotnet-build
+
+dotnet-restore:
+	@dotnet restore Backend/BiografWeb.sln
+
+dotnet-build:
+	@dotnet build Backend/BiografWeb.sln -c Debug
 

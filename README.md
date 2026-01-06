@@ -1,65 +1,82 @@
-# H3-BioOpg
+# H3-BioOpg (Cinema App)
 
-Angular frontend for a cinema app. Uses:
-- Mock REST API via json-server (`/api` → http://localhost:3000, backed by `db.json`)
-- Upload server for posters on http://localhost:3001
-- Mock unsigned JWT (header.payload.) stored in `localStorage`
-- SQL Injection Lab page (frontend wired, backend to be added later)
+Full-stack cinema app:
+- Angular 16+ frontend
+- ASP.NET Core 8 Web API with EF Core 8 and PostgreSQL
+- Uploads microservice (Node/Express + Multer) for poster images
 
-## Getting started
+Everything runs via Docker Compose + a Makefile.
 
-1) Install
+## Quick start (Docker)
+
+Prereqs: Docker Desktop
+
 ```bash
+make up          # start db, api, upload server, and Angular dev server
+make seed        # run EF Core migrations + seed data (idempotent)
+make open        # macOS convenience: opens Web, Swagger, pgAdmin
+```
+
+URLs:
+- Website: http://localhost:4200
+- API: http://localhost:5099 (Swagger: http://localhost:5099/swagger)
+- Uploads: http://localhost:3001
+- pgAdmin: http://localhost:5050
+
+Common tasks:
+```bash
+make ps          # show services
+make logs        # tail logs
+make rebuild-api # rebuild API image and restart it
+make down        # stop services
+make clean       # stop & remove volumes (resets DB and uploaded files)
+```
+
+## Project layout
+- Angular app: `src/`
+- API solution: `Backend/` (EF Core, repositories/services/controllers)
+- Upload server: `upload-server.js` (serves `uploads/`)
+- Compose & Make: `docker-compose.yml`, `Makefile`
+
+## Backend details
+- Database: Postgres 16
+- EF Core migrations applied on API start; seed controlled by env flags the Makefile passes:
+  - `SEED_DB=true`, `SEED_ONLY=true` used by `make seed`
+- Seeders populate movies, auditoriums, ticket types, screenings, users, bookings.
+- API endpoints (prefix `api/`):
+  - `GET/POST/PUT/DELETE /api/movies`
+  - `GET/POST/PUT/DELETE /api/screenings`
+  - `GET/POST/PUT/DELETE /api/auditoriums`
+  - `GET/POST/PUT/DELETE /api/users`
+  - `GET /api/users/byEmail?email=...`
+  - `GET/POST/PUT/DELETE /api/bookings`
+
+Note: Authentication is currently mock on the frontend (unsigned JWT stored in `localStorage`). The API does not issue or validate JWTs yet.
+
+## Frontend details
+- Dev server runs on http://localhost:4200 with a proxy (`proxy.conf.json`) to backend services:
+  - `/api` → API (http://api:5099 inside Compose → http://localhost:5099)
+  - `/upload`, `/uploads` → Upload server (http://localhost:3001)
+  - `/hackapi` → API root (reserved for lab endpoints)
+- Routes:
+  - `/` browse movies; `/movies/:id` details
+  - `/screenings/:id/book` booking screen
+  - `/login`, `/register`
+  - `/admin/*` for Movies, Screenings, Auditoriums, Users (guarded by role Admin)
+
+## Upload server
+- Runs on port 3001
+- Static files: `GET /uploads/*`
+- Poster upload: `POST /upload/poster` (multipart form-data field `file`, ≤5MB, JPEG/PNG)
+- Response: `{ "url": "/uploads/posters/<filename>" }`
+
+```bash
+# Angular
 npm install
-```
-
-2) Start mock API (json-server)
-```bash
-npm run api
-# serves http://localhost:3000 from db.json
-```
-
-3) Start upload server (for poster images)
-```bash
-npm run upload
-# serves http://localhost:3001
-```
-
-4) Start Angular dev server (with proxy)
-```bash
 npm start
-# http://localhost:4200, proxies:
-#   /api     -> http://localhost:3000
-#   /upload  -> http://localhost:3001
-#   /uploads -> http://localhost:3001
-#   /hackapi -> http://localhost:5099 (future backend)
+
+# API
+dotnet restore Backend/BiografWeb.sln
+dotnet build Backend/BiografWeb.sln -c Debug
+dotnet run --project Backend/BiografWeb.Api/BiografWeb.Api.csproj
 ```
-
-## Features (current)
-- Movies browse and details
-- Admin: Movies, Screenings, Auditoriums, Users (CRUD)
-- Register/Login with client-side salted SHA256 verification
-- Mock JWT: Authorization header carries a JWT-shaped string (alg "none")
-- Search: simple local filter (mock Elastic)
-- SQL Injection Lab page at `/hack/sql` (posts raw SQL to `/hackapi/hack/sql`; backend to be implemented)
-
-## Admin access in frontend-only mode
-Until a real backend exists, you can create a temporary admin token in the browser console:
-```js
-// Create a mock unsigned JWT with role Admin (valid for 1 hour)
-const h = btoa(JSON.stringify({alg:'none',typ:'JWT'})).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-const p = btoa(JSON.stringify({sub:'dev-admin',role:'Admin',exp:Math.floor(Date.now()/1000)+3600}))
-  .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-localStorage.setItem('auth_token', `${h}.${p}.`);
-location.reload();
-```
-After this, open Admin links from the header.
-
-## Build
-```bash
-npm run build
-```
-
-## Notes
-- Swap json-server for ASP.NET + MSSQL later (keep `/api/*` routes)
-- Implement the SQL endpoint at `POST http://localhost:5099/hack/sql` to enable the `/hack/sql` page

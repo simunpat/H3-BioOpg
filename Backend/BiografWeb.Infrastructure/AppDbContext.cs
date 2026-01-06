@@ -1,5 +1,6 @@
 using BiografWeb.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BiografWeb.Infrastructure;
 
@@ -16,6 +17,38 @@ public class AppDbContext : DbContext
     public DbSet<BookingSeat> BookingSeats => Set<BookingSeat>();
     public DbSet<BookingItem> BookingItems => Set<BookingItem>();
 
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        UpdateTimestamps();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void UpdateTimestamps()
+    {
+        var now = DateTime.UtcNow;
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            if (entry.State == EntityState.Added)
+            {
+                SetPropertyIfExists(entry, "CreatedAt", now);
+                SetPropertyIfExists(entry, "UpdatedAt", now);
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+                SetPropertyIfExists(entry, "UpdatedAt", now);
+            }
+        }
+    }
+
+    private static void SetPropertyIfExists(EntityEntry entry, string propertyName, DateTime value)
+    {
+        var prop = entry.Properties.FirstOrDefault(p => p.Metadata.Name == propertyName);
+        if (prop is not null)
+        {
+            prop.CurrentValue = value;
+        }
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -27,6 +60,8 @@ public class AppDbContext : DbContext
             e.Property(x => x.Id).ValueGeneratedOnAdd();
             e.Property(x => x.Title).HasMaxLength(200).IsRequired();
             e.Property(x => x.Genre).HasMaxLength(100).IsRequired();
+            e.Property(x => x.CreatedAt).IsRequired();
+            e.Property(x => x.UpdatedAt).IsRequired();
         });
 
         modelBuilder.Entity<Auditorium>(e =>
@@ -35,6 +70,8 @@ public class AppDbContext : DbContext
             e.HasKey(a => a.Id);
             e.Property(a => a.Id).ValueGeneratedOnAdd();
             e.Property(a => a.Name).HasMaxLength(200).IsRequired();
+            e.Property(a => a.CreatedAt).IsRequired();
+            e.Property(a => a.UpdatedAt).IsRequired();
         });
 
         modelBuilder.Entity<TicketType>(e =>
@@ -44,6 +81,8 @@ public class AppDbContext : DbContext
             e.Property(t => t.Id).ValueGeneratedOnAdd();
             e.Property(t => t.Name).HasMaxLength(100).IsRequired();
             e.Property(t => t.Multiplier).HasColumnType("decimal(10,2)");
+            e.Property(t => t.CreatedAt).IsRequired();
+            e.Property(t => t.UpdatedAt).IsRequired();
         });
 
         modelBuilder.Entity<Screening>(e =>
@@ -53,6 +92,8 @@ public class AppDbContext : DbContext
             e.Property(s => s.Id).ValueGeneratedOnAdd();
             e.Property(s => s.Price).HasColumnType("decimal(10,2)");
             e.Property(s => s.StartTime).IsRequired();
+            e.Property(s => s.CreatedAt).IsRequired();
+            e.Property(s => s.UpdatedAt).IsRequired();
         });
 
         modelBuilder.Entity<User>(e =>
@@ -63,6 +104,8 @@ public class AppDbContext : DbContext
             e.Property(u => u.Email).HasMaxLength(200).IsRequired();
             e.Property(u => u.Role).HasMaxLength(50).IsRequired();
             e.Property(u => u.PasswordHash).HasMaxLength(512).IsRequired();
+            e.Property(u => u.CreatedAt).IsRequired();
+            e.Property(u => u.UpdatedAt).IsRequired();
         });
 
         modelBuilder.Entity<Booking>(e =>
@@ -71,6 +114,8 @@ public class AppDbContext : DbContext
             e.HasKey(b => b.Id);
             e.Property(b => b.Id).ValueGeneratedOnAdd();
             e.Property(b => b.TotalPrice).HasColumnType("decimal(10,2)");
+            e.Property(b => b.CreatedAt).IsRequired();
+            e.Property(b => b.UpdatedAt).IsRequired();
         });
 
         modelBuilder.Entity<BookingSeat>(e =>
@@ -83,6 +128,8 @@ public class AppDbContext : DbContext
                 .WithMany(b => b.Seats)
                 .HasForeignKey(s => s.BookingId)
                 .OnDelete(DeleteBehavior.Cascade);
+            e.Property(s => s.CreatedAt).IsRequired();
+            e.Property(s => s.UpdatedAt).IsRequired();
         });
 
         modelBuilder.Entity<BookingItem>(e =>
@@ -94,6 +141,8 @@ public class AppDbContext : DbContext
                 .WithMany(b => b.Items)
                 .HasForeignKey(i => i.BookingId)
                 .OnDelete(DeleteBehavior.Cascade);
+            e.Property(i => i.CreatedAt).IsRequired();
+            e.Property(i => i.UpdatedAt).IsRequired();
         });
     }
 }

@@ -7,6 +7,8 @@ public class Movie
     public int DurationMin { get; set; }
     public string Genre { get; set; } = string.Empty;
     public string? PosterUrl { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }
 
 

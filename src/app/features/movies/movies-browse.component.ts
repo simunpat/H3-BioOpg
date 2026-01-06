@@ -2,7 +2,6 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MoviesService } from '../../services/movies.service';
 import { Movie } from '../../models/movie';
 import { MockElasticSearchService } from '../../search/mock-elastic-search.service';
 
@@ -14,7 +13,6 @@ import { MockElasticSearchService } from '../../search/mock-elastic-search.servi
     styleUrls: ['./movies-browse.component.scss'],
 })
 export class MoviesBrowseComponent {
-    private readonly moviesService = inject(MoviesService);
     private readonly searchService = inject(MockElasticSearchService);
     protected readonly allResults = signal<Movie[]>([]);
     protected readonly query = signal<string>('');

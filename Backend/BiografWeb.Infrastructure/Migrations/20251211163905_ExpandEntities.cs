@@ -89,7 +89,6 @@ namespace BiografWeb.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BookingId = table.Column<Guid>(type: "uuid", nullable: false),
                     TicketTypeId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     Qty = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

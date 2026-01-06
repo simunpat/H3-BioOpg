@@ -73,10 +73,6 @@ namespace BiografWeb.Infrastructure.Migrations
                     b.Property<Guid>("BookingId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
                     b.Property<int>("Qty")
                         .HasColumnType("integer");
 

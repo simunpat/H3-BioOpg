@@ -11,6 +11,7 @@ fs.mkdirSync(postersDir, { recursive: true });
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, postersDir),
+
     filename: (req, file, cb) => {
         const ts = Date.now();
         const safe = file.originalname.replace(/[^a-zA-Z0-9_.-]/g, '_');
@@ -22,6 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 },
+
     fileFilter: (req, file, cb) => {
         const allowed = ['image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png'];
 

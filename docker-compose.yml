@@ -47,7 +47,7 @@ services:
     command: ["node", "upload-server.js"]
     volumes:
       - .:/app
-      - uploads_data:/app/uploads
+      - ./uploads:/app/uploads
     ports:
       - "3001:3001"
 
@@ -66,4 +66,3 @@ services:
 
 volumes:
   bio_pg_data:
-  uploads_data:

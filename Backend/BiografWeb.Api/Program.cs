@@ -2,6 +2,7 @@ using BiografWeb.Infrastructure;
 using BiografWeb.Application.Movies;
 using BiografWeb.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using BiografWeb.Infrastructure.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,11 +41,25 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Ensure database schema is up to date on startup (dev convenience)
+// Flags for seeding
+var shouldSeed = string.Equals(System.Environment.GetEnvironmentVariable("SEED_DB"), "true", System.StringComparison.OrdinalIgnoreCase);
+var seedOnly = string.Equals(System.Environment.GetEnvironmentVariable("SEED_ONLY"), "true", System.StringComparison.OrdinalIgnoreCase);
+
+// Ensure database schema is up to date on startup
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
+
+    if (shouldSeed)
+    {
+        await SeedData.ApplyAsync(db);
+    }
+}
+
+if (seedOnly)
+{
+    return;
 }
 
 app.MapControllers();

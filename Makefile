@@ -1,4 +1,4 @@
-.PHONY: help up down restart logs logs-web ps rebuild-api urls open clean
+.PHONY: help up down restart logs logs-web ps rebuild-api urls open clean seed
 
 help:
 	@echo "Available targets:"
@@ -12,6 +12,7 @@ help:
 	@echo "  make urls        - Print service URLs"
 	@echo "  make open        - Open key URLs in your browser (macOS)"
 	@echo "  make clean       - Down and remove volumes (DANGEROUS: wipes DB/uploads)"
+	@echo "  make seed        - Run migrations and seed DB in one-off API container"
 
 up:
 	@docker compose up -d --wait
@@ -56,4 +57,13 @@ open:
 clean:
 	@docker compose down -v
 	@echo "Volumes removed. Database and uploaded files reset."
+
+seed:
+	@docker compose run --rm \
+		-e ASPNETCORE_ENVIRONMENT=Development \
+		-e SEED_DB=true \
+		-e SEED_ONLY=true \
+		-e Logging__LogLevel__Microsoft.EntityFrameworkCore.Database.Command=Warning \
+		-e Logging__LogLevel__Microsoft.EntityFrameworkCore.Migrations=Warning \
+		api
 

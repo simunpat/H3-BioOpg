@@ -17,9 +17,9 @@ export class UsersService {
         return this.http.get<User>(`${BASE_URL}/${id}`);
     }
 
-    findByEmail(email: string): Observable<User[]> {
+    findByEmail(email: string): Observable<User | null> {
         const params = new HttpParams().set('email', email);
-        return this.http.get<User[]>(BASE_URL, { params });
+        return this.http.get<User | null>(`${BASE_URL}/byEmail`, { params });
     }
 
     create(user: User): Observable<User> {

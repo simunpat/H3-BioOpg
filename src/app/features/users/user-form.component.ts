@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { User, UserRole } from '../../models/user';
+import { User } from '../../models/user';
 import SHA256 from 'crypto-js/sha256';
 
 @Component({
@@ -18,9 +18,9 @@ export class UserFormComponent {
     private readonly router = inject(Router);
     private readonly users = inject(UsersService);
 
-    protected form: { email: string; role: UserRole; password?: string } = {
+    protected form: { email: string; isAdmin: boolean; password?: string } = {
         email: '',
-        role: 'Customer',
+        isAdmin: false,
     };
     protected editingId: string | null = null;
 
@@ -31,10 +31,7 @@ export class UserFormComponent {
             this.users.get(id).subscribe({
                 next: (u) => {
                     if (!u) return;
-                    this.form = {
-                        email: u.email,
-                        role: u.role,
-                    };
+                    this.form = { email: u.email, isAdmin: u.isAdmin };
                 },
                 error: (err) => {
                     // eslint-disable-next-line no-console
@@ -57,15 +54,16 @@ export class UserFormComponent {
 
     save(): void {
         const email = this.form.email?.trim().toLowerCase();
-        const role = this.form.role;
-        if (!email || !role) return;
+        const isAdmin = this.form.isAdmin;
+
+        if (!email) return;
 
         if (this.editingId) {
             // Update
             const base: User = {
                 id: this.editingId,
                 email,
-                role,
+                isAdmin,
                 passwordHash: '', // will be preserved server-side if empty here; for json server we send something meaningful
             };
 
@@ -102,7 +100,7 @@ export class UserFormComponent {
             const newUser: User = {
                 id: crypto.randomUUID(),
                 email,
-                role,
+                isAdmin,
                 passwordHash: hash,
                 passwordSalt: salt,
             };

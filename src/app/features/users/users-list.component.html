@@ -5,14 +5,14 @@
         <thead>
             <tr>
                 <th>Email</th>
-                <th>Role</th>
+                <th>Admin</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let u of users">
                 <td>{{ u.email }}</td>
-                <td>{{ u.role }}</td>
+                <td>{{ u.isAdmin ? 'Admin' : 'Customer' }}</td>
                 <td>
                     <div class="button-container">
                         <a class="btn" [routerLink]="['/admin/users', u.id, 'edit']">Edit</a>

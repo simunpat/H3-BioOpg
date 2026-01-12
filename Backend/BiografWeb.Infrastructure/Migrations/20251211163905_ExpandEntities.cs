@@ -81,7 +81,7 @@ namespace BiografWeb.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Email = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Role = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
                     PasswordHash = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     PasswordSalt = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

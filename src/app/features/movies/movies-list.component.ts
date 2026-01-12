@@ -30,7 +30,7 @@ import Dropzone from 'dropzone';
         <section>
             <h1>Movies</h1>
             <form
-                *ngIf="auth.role() === 'Admin'"
+                *ngIf="auth.isAdmin()"
                 (ngSubmit)="save()"
                 style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 8px 0;"
             >
@@ -103,12 +103,12 @@ import Dropzone from 'dropzone';
 
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef>
-                        <span *ngIf="auth.role() === 'Admin'">Actions</span>
+                        <span *ngIf="auth.isAdmin()">Actions</span>
                     </th>
 
                     <td mat-cell *matCellDef="let m">
                         <a mat-button [routerLink]="['/movies', m.id]">View</a>
-                        <ng-container *ngIf="auth.role() === 'Admin'">
+                        <ng-container *ngIf="auth.isAdmin()">
                             <button mat-button (click)="startEdit(m)">Edit</button>
                             <button mat-button color="warn" (click)="remove(m.id)">Delete</button>
                         </ng-container>
@@ -190,7 +190,7 @@ export class MoviesListComponent implements AfterViewInit, OnDestroy {
 
     save(): void {
         if (!this.form.title || !this.form.genre || !this.form.durationMin) return;
-        if (this.auth.role() !== 'Admin') return;
+        if (!this.auth.isAdmin()) return;
 
         if (this.editingId) {
             const movie: Movie = {
@@ -235,7 +235,7 @@ export class MoviesListComponent implements AfterViewInit, OnDestroy {
     add(): void {
         if (!this.form.title || !this.form.genre || !this.form.durationMin) return;
 
-        if (this.auth.role() !== 'Admin') return;
+        if (!this.auth.isAdmin()) return;
 
         const movie: Movie = {
             id: uuidv4(),
@@ -278,7 +278,7 @@ export class MoviesListComponent implements AfterViewInit, OnDestroy {
     }
 
     remove(id: string): void {
-        if (this.auth.role() !== 'Admin') return;
+        if (!this.auth.isAdmin()) return;
 
         this.service.delete(id).subscribe(() => this.refresh());
     }

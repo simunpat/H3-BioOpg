@@ -26,7 +26,7 @@ export class RegisterComponent {
         if (!email || !this.password) return;
 
         this.users.findByEmail(email).subscribe((existing) => {
-            if ((existing?.length ?? 0) > 0) {
+            if (existing) {
                 this.error = 'Email already registered';
                 return;
             }
@@ -36,7 +36,7 @@ export class RegisterComponent {
             const u: User = {
                 id: uuidv4(),
                 email,
-                role: 'Customer',
+                isAdmin: false,
                 passwordHash,
                 passwordSalt: salt,
             };

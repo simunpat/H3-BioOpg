@@ -102,7 +102,7 @@ public class AppDbContext : DbContext
             e.HasKey(u => u.Id);
             e.Property(u => u.Id).ValueGeneratedOnAdd();
             e.Property(u => u.Email).HasMaxLength(200).IsRequired();
-            e.Property(u => u.Role).HasMaxLength(50).IsRequired();
+            e.Property(u => u.IsAdmin).IsRequired();
             e.Property(u => u.PasswordHash).HasMaxLength(512).IsRequired();
             e.Property(u => u.CreatedAt).IsRequired();
             e.Property(u => u.UpdatedAt).IsRequired();

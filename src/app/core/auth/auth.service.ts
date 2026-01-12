@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 export interface AuthToken {
     sub: string;
-    role: 'Admin' | 'Customer';
+    isAdmin: boolean;
     exp: number; // epoch seconds
 }
 
@@ -54,7 +54,7 @@ export class AuthService {
     private readonly decoded = computed(() => parseJwt(this.jwtSignal()));
 
     readonly isAuthenticated = computed(() => !!this.decoded());
-    readonly role = computed(() => this.decoded()?.role ?? null);
+    readonly isAdmin = computed(() => this.decoded()?.isAdmin ?? false);
     readonly userId = computed(() => this.decoded()?.sub ?? null);
 
     constructor(private readonly router: Router) {}

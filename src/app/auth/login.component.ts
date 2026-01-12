@@ -31,9 +31,7 @@ export class LoginComponent {
             return;
         }
 
-        this.users.findByEmail(email).subscribe((matches) => {
-            const u = (matches ?? [])[0];
-
+        this.users.findByEmail(email).subscribe((u) => {
             if (!u || !u.passwordSalt || !u.passwordHash) {
                 this.error = 'Invalid email or password';
                 return;
@@ -47,7 +45,7 @@ export class LoginComponent {
 
             const token: AuthToken = {
                 sub: u.id,
-                role: u.role,
+                isAdmin: u.isAdmin,
                 exp: Math.floor(Date.now() / 1000) + 60 * 60,
             };
 

@@ -29,7 +29,7 @@ public class UsersRepository(AppDbContext db) : IUsersRepository
         var existing = await _db.Users.FirstOrDefaultAsync(x => x.Id == id, ct);
         if (existing is null) return null;
         existing.Email = u.Email;
-        existing.Role = u.Role;
+        existing.IsAdmin = u.IsAdmin;
         existing.PasswordHash = u.PasswordHash;
         existing.PasswordSalt = u.PasswordSalt;
         await _db.SaveChangesAsync(ct);

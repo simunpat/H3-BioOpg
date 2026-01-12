@@ -6,7 +6,7 @@ import { UsersListComponent } from './features/users/users-list.component';
 import { LoginComponent } from './auth/login.component';
 import { RegisterComponent } from './auth/register.component';
 import { authGuard } from './core/auth/auth.guard';
-import { roleGuard } from './core/auth/role.guard';
+import { adminGuard } from './core/auth/role.guard';
 import { alreadyAuthGuard } from './core/auth/already-auth.guard';
 import { BookingScreenComponent } from './features/bookings/booking-screen.component';
 import { MovieDetailComponent } from './features/movies/movie-detail.component';
@@ -25,7 +25,7 @@ export const routes: Routes = [
     { path: 'hack/sql', component: HackSqlComponent },
     {
         path: 'admin',
-        canActivate: [authGuard, roleGuard('Admin')],
+        canActivate: [authGuard, adminGuard],
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'movies' },
             { path: 'movies', component: AdminMoviesComponent },

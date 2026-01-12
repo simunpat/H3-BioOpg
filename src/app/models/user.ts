@@ -1,9 +1,7 @@
-export type UserRole = 'Admin' | 'Customer';
-
 export interface User {
     id: string;
     email: string;
-    role: UserRole;
+    isAdmin: boolean;
     passwordHash: string;
     passwordSalt?: string;
 }

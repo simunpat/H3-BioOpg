@@ -6,7 +6,7 @@
 
         <span class="spacer"></span>
 
-        <ng-container *ngIf="auth.role() === 'Admin'">
+        <ng-container *ngIf="auth.isAdmin()">
             <a routerLink="/admin/movies">Movies</a>
 
             <a routerLink="/admin/screenings">Screenings</a>

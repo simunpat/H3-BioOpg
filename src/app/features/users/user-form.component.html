@@ -10,13 +10,8 @@
             </label>
 
             <label class="field">
-                <span class="label">Role</span>
-
-                <select class="input" name="role" [(ngModel)]="form.role" required>
-                    <option [ngValue]="'Admin'">Admin</option>
-
-                    <option [ngValue]="'Customer'">Customer</option>
-                </select>
+                <span class="label">Admin</span>
+                <input class="input" type="checkbox" name="isAdmin" [(ngModel)]="form.isAdmin" />
             </label>
 
             <label class="field">

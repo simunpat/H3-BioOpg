@@ -65,6 +65,7 @@ public class HackController(AppDbContext db) : ControllerBase
             for (var i = 0; i < reader.FieldCount; i++)
             {
                 var isNull = await reader.IsDBNullAsync(i, ct);
+
                 row[reader.GetName(i)] = isNull ? null : reader.GetValue(i);
             }
 

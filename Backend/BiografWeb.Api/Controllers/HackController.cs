@@ -44,6 +44,7 @@ public class HackController(AppDbContext db) : ControllerBase
 
             await using var reader = await command.ExecuteReaderAsync(ct);
             var rows = await ReadAllRowsAsync(reader, ct);
+
             return Ok(rows);
         }
         catch (Exception ex)
@@ -60,11 +61,13 @@ public class HackController(AppDbContext db) : ControllerBase
         while (await reader.ReadAsync(ct))
         {
             var row = new Dictionary<string, object?>(reader.FieldCount, StringComparer.OrdinalIgnoreCase);
+
             for (var i = 0; i < reader.FieldCount; i++)
             {
                 var isNull = await reader.IsDBNullAsync(i, ct);
                 row[reader.GetName(i)] = isNull ? null : reader.GetValue(i);
             }
+
             results.Add(row);
         }
 

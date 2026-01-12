@@ -39,7 +39,15 @@ function parseJwt(jwt: string | null): AuthToken | null {
     try {
         const json = b64urlDecode(parts[1]);
 
-        return JSON.parse(json) as AuthToken;
+        const raw = JSON.parse(json) as any;
+
+        // Coerce isAdmin to a strict boolean even if backend serialized as string
+        const isAdmin: boolean =
+            typeof raw.isAdmin === 'boolean'
+                ? raw.isAdmin
+                : String(raw.isAdmin).toLowerCase() === 'true';
+
+        return { ...raw, isAdmin } as AuthToken;
     } catch {
         return null;
     }
@@ -59,12 +67,8 @@ export class AuthService {
 
     constructor(private readonly router: Router) {}
 
-    // Accepts a payload for now. Later switch to accepting the server-returned JWT string.
-    loginWithToken(payload: AuthToken): void {
-        const jwt = toMockJwt(payload);
-
+    loginWithJwt(jwt: string): void {
         localStorage.setItem(TOKEN_KEY, jwt);
-
         this.jwtSignal.set(jwt);
     }
 

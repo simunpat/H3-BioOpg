@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService, AuthToken } from '../core/auth/auth.service';
-import { UsersService } from '../services/users.service';
-import SHA256 from 'crypto-js/sha256';
+import { AuthService } from '../core/auth/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +19,7 @@ export class LoginComponent {
 
     constructor(
         private readonly auth: AuthService,
-        private readonly users: UsersService,
+        private readonly http: HttpClient,
         private readonly router: Router
     ) {}
 
@@ -31,26 +30,21 @@ export class LoginComponent {
             return;
         }
 
-        this.users.findByEmail(email).subscribe((u) => {
-            if (!u || !u.passwordSalt || !u.passwordHash) {
-                this.error = 'Invalid email or password';
-                return;
-            }
+        this.http
+            .post<{ token: string }>('/api/auth/login', { email, password: this.password })
+            .subscribe({
+                next: (res) => {
+                    if (!res?.token) {
+                        this.error = 'Unexpected response';
+                        return;
+                    }
 
-            const computed = SHA256(this.password + u.passwordSalt).toString();
-            if (computed !== u.passwordHash) {
-                this.error = 'Invalid email or password';
-                return;
-            }
-
-            const token: AuthToken = {
-                sub: u.id,
-                isAdmin: u.isAdmin,
-                exp: Math.floor(Date.now() / 1000) + 60 * 60,
-            };
-
-            this.auth.loginWithToken(token);
-            void this.router.navigate(['/']);
-        });
+                    this.auth.loginWithJwt(res.token);
+                    void this.router.navigate(['/']);
+                },
+                error: () => {
+                    this.error = 'Invalid email or password';
+                },
+            });
     }
 }

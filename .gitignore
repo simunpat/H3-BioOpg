@@ -88,3 +88,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Keep example appsettings.json file
+Backend/BiografWeb.Api/appsettings.json
+!Backend/BiografWeb.Api/appsettings.example.json

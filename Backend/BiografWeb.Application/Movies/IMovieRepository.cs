@@ -1,4 +1,5 @@
 using BiografWeb.Domain;
+using BiografWeb.Application.Movies.Models;
 
 namespace BiografWeb.Application.Movies;
 
@@ -9,6 +10,9 @@ public interface IMovieRepository
     Task<Movie> CreateAsync(Movie movie, CancellationToken ct = default);
     Task<Movie?> UpdateAsync(Guid id, Movie input, CancellationToken ct = default);
     Task<bool> DeleteAsync(Guid id, CancellationToken ct = default);
+
+    Task<List<MovieStatsDto>> GetStatsAsync(CancellationToken ct = default);
+    Task<MovieDetailsStatsDto?> GetStatsByIdAsync(Guid id, CancellationToken ct = default);
 }
 
 

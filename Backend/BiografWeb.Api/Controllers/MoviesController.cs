@@ -1,4 +1,5 @@
 using BiografWeb.Application.Movies;
+using BiografWeb.Application.Movies.Models;
 using BiografWeb.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,15 @@ public class MoviesController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         => await _service.DeleteAsync(id, ct) ? NoContent() : NotFound();
+
+    // Stats endpoints
+    [HttpGet("stats")]
+    public async Task<ActionResult<List<MovieStatsDto>>> Stats(CancellationToken ct)
+        => await _service.GetStatsAsync(ct);
+
+    [HttpGet("{id:guid}/stats")]
+    public async Task<ActionResult<MovieDetailsStatsDto>> StatsById(Guid id, CancellationToken ct)
+        => await _service.GetStatsByIdAsync(id, ct) is { } s ? Ok(s) : NotFound();
 }
 
 

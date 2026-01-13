@@ -1,4 +1,5 @@
 using BiografWeb.Domain;
+using BiografWeb.Application.Users.Models;
 
 namespace BiografWeb.Application.Users;
 
@@ -10,6 +11,9 @@ public interface IUsersService
     Task<User> CreateAsync(User u, CancellationToken ct = default);
     Task<User?> UpdateAsync(Guid id, User u, CancellationToken ct = default);
     Task<bool> DeleteAsync(Guid id, CancellationToken ct = default);
+
+    Task<List<UserStatsDto>> GetStatsAsync(CancellationToken ct = default);
+    Task<UserDetailsStatsDto?> GetStatsByIdAsync(Guid id, CancellationToken ct = default);
 }
 
 

@@ -1,4 +1,5 @@
 using BiografWeb.Application.Screenings;
+using BiografWeb.Application.Screenings.Models;
 using BiografWeb.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,14 @@ public class ScreeningsController(IScreeningsService service) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         => await _service.DeleteAsync(id, ct) ? NoContent() : NotFound();
+
+    [HttpGet("stats")]
+    public Task<List<ScreeningStatsDto>> Stats(CancellationToken ct)
+        => _service.GetStatsAsync(ct);
+
+    [HttpGet("{id:guid}/stats")]
+    public async Task<ActionResult<ScreeningDetailsStatsDto>> StatsById(Guid id, CancellationToken ct)
+        => await _service.GetStatsByIdAsync(id, ct) is { } s ? Ok(s) : NotFound();
 }
 
 

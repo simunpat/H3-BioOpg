@@ -1,4 +1,5 @@
 using BiografWeb.Application.Bookings;
+using BiografWeb.Application.Bookings.Models;
 using BiografWeb.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,18 @@ public class BookingsController(IBookingsService service) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         => await _service.DeleteAsync(id, ct) ? NoContent() : NotFound();
+
+    [HttpGet("stats")]
+    public Task<List<BookingStatsDto>> Stats(CancellationToken ct)
+        => _service.GetStatsAsync(ct);
+
+    [HttpGet("{id:guid}/stats")]
+    public async Task<ActionResult<BookingDetailsStatsDto>> StatsById(Guid id, CancellationToken ct)
+        => await _service.GetStatsByIdAsync(id, ct) is { } s ? Ok(s) : NotFound();
+
+    [HttpGet("stats/summary")]
+    public async Task<ActionResult<object>> Summary(CancellationToken ct)
+        => Ok(new { totalRevenue = await _service.GetTotalRevenueAsync(ct) });
 }
 
 

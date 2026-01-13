@@ -1,4 +1,5 @@
 using BiografWeb.Domain;
+using BiografWeb.Application.Users.Models;
 
 namespace BiografWeb.Application.Users;
 
@@ -19,6 +20,12 @@ public class UsersService(IUsersRepository repo) : IUsersService
 
     public Task<User?> UpdateAsync(Guid id, User u, CancellationToken ct = default) => _repo.UpdateAsync(id, u, ct);
     public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default) => _repo.DeleteAsync(id, ct);
+
+    public Task<List<UserStatsDto>> GetStatsAsync(CancellationToken ct = default)
+        => _repo.GetStatsAsync(ct);
+
+    public Task<UserDetailsStatsDto?> GetStatsByIdAsync(Guid id, CancellationToken ct = default)
+        => _repo.GetStatsByIdAsync(id, ct);
 }
 
 

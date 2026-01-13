@@ -1,4 +1,5 @@
 using BiografWeb.Domain;
+using BiografWeb.Application.Screenings.Models;
 
 namespace BiografWeb.Application.Screenings;
 
@@ -20,6 +21,12 @@ public class ScreeningsService(IScreeningsRepository repo) : IScreeningsService
 
     public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         => _repo.DeleteAsync(id, ct);
+
+    public Task<List<ScreeningStatsDto>> GetStatsAsync(CancellationToken ct = default)
+        => _repo.GetStatsAsync(ct);
+
+    public Task<ScreeningDetailsStatsDto?> GetStatsByIdAsync(Guid id, CancellationToken ct = default)
+        => _repo.GetStatsByIdAsync(id, ct);
 }
 
 

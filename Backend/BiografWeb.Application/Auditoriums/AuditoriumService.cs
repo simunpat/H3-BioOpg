@@ -1,4 +1,5 @@
 using BiografWeb.Domain;
+using BiografWeb.Application.Auditoriums.Models;
 
 namespace BiografWeb.Application.Auditoriums;
 
@@ -21,6 +22,12 @@ public class AuditoriumService(IAuditoriumRepository repo) : IAuditoriumService
         => _repo.UpdateAsync(id, a, ct);
 
     public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default) => _repo.DeleteAsync(id, ct);
+
+    public Task<List<AuditoriumNextStartDto>> GetNextStartAsync(CancellationToken ct = default)
+        => _repo.GetNextStartAsync(ct);
+
+    public Task<List<AuditoriumAvgOccupancyDto>> GetAverageOccupancyNext7DaysAsync(CancellationToken ct = default)
+        => _repo.GetAverageOccupancyNext7DaysAsync(ct);
 }
 
 

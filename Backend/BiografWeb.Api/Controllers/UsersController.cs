@@ -1,4 +1,5 @@
 using BiografWeb.Application.Users;
+using BiografWeb.Application.Users.Models;
 using BiografWeb.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,13 @@ public class UsersController(IUsersService service) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         => await _service.DeleteAsync(id, ct) ? NoContent() : NotFound();
+
+    [HttpGet("stats")]
+    public Task<List<UserStatsDto>> Stats(CancellationToken ct) => _service.GetStatsAsync(ct);
+
+    [HttpGet("{id:guid}/stats")]
+    public async Task<ActionResult<UserDetailsStatsDto>> StatsById(Guid id, CancellationToken ct)
+        => await _service.GetStatsByIdAsync(id, ct) is { } s ? Ok(s) : NotFound();
 }
 
 

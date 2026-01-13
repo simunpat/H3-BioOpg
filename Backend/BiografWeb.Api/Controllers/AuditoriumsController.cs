@@ -1,4 +1,5 @@
 using BiografWeb.Application.Auditoriums;
+using BiografWeb.Application.Auditoriums.Models;
 using BiografWeb.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,13 @@ public class AuditoriumsController(IAuditoriumService service) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         => await _service.DeleteAsync(id, ct) ? NoContent() : NotFound();
+
+    [HttpGet("stats/next-start")]
+    public Task<List<AuditoriumNextStartDto>> NextStart(CancellationToken ct) => _service.GetNextStartAsync(ct);
+
+    [HttpGet("stats/avg-occupancy")]
+    public Task<List<AuditoriumAvgOccupancyDto>> AverageOccupancy(CancellationToken ct)
+        => _service.GetAverageOccupancyNext7DaysAsync(ct);
 }
 
 

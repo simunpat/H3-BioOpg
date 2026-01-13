@@ -1,4 +1,5 @@
 using BiografWeb.Domain;
+using BiografWeb.Application.Bookings.Models;
 
 namespace BiografWeb.Application.Bookings;
 
@@ -20,6 +21,15 @@ public class BookingsService(IBookingsRepository repo) : IBookingsService
 
     public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         => _repo.DeleteAsync(id, ct);
+
+    public Task<List<BookingStatsDto>> GetStatsAsync(CancellationToken ct = default)
+        => _repo.GetStatsAsync(ct);
+
+    public Task<BookingDetailsStatsDto?> GetStatsByIdAsync(Guid id, CancellationToken ct = default)
+        => _repo.GetStatsByIdAsync(id, ct);
+
+    public Task<decimal> GetTotalRevenueAsync(CancellationToken ct = default)
+        => _repo.GetTotalRevenueAsync(ct);
 }
 
 

@@ -1,4 +1,5 @@
 using BiografWeb.Domain;
+using BiografWeb.Application.Movies.Models;
 
 namespace BiografWeb.Application.Movies;
 
@@ -24,6 +25,12 @@ public class MovieService : IMovieService
         => _repo.UpdateAsync(id, input, ct);
 
     public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default) => _repo.DeleteAsync(id, ct);
+
+    public Task<List<MovieStatsDto>> GetStatsAsync(CancellationToken ct = default)
+        => _repo.GetStatsAsync(ct);
+
+    public Task<MovieDetailsStatsDto?> GetStatsByIdAsync(Guid id, CancellationToken ct = default)
+        => _repo.GetStatsByIdAsync(id, ct);
 }
 
 

@@ -1,4 +1,5 @@
 using BiografWeb.Application.TicketTypes;
+using BiografWeb.Application.TicketTypes.Models;
 using BiografWeb.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,12 @@ public class TicketTypesController(ITicketTypesService service) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         => await _service.DeleteAsync(id, ct) ? NoContent() : NotFound();
+
+    [HttpGet("stats/inuse")]
+    public Task<List<TicketTypeInUseDto>> InUseStats(CancellationToken ct) => _service.GetInUseCountsAsync(ct);
+
+    [HttpGet("stats/revenue")]
+    public Task<List<TicketTypeRevenueDto>> RevenueStats(CancellationToken ct) => _service.GetRevenueAsync(ct);
 }
 
 

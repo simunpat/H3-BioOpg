@@ -1,39 +1,92 @@
-/* Header link styling */
-.app-nav {
+/* Sidebar layout */
+.app-shell {
     display: flex;
-    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: #f8fafc; /* match page background */
+    color: #0f172a; /* dark text */
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+    height: 100vh; /* never exceed screen height */
+    overflow-y: auto; /* scroll internally if content is taller */
+    position: sticky; /* stay visible while page scrolls */
+    top: 0;
+    align-self: flex-start; /* ensure sticky works inside flex container */
+}
+
+.sidebar .brand {
+    height: 56px;
+    display: flex;
     align-items: center;
-    border-bottom: 1px solid #eee;
-    height: 3.25rem;
-    width: 100%;
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
 
-    .container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+.sidebar .brand img {
+    height: 28px;
+    width: auto;
+    display: block;
+}
 
-    .spacer {
-        flex: 1 1 auto;
-    }
+.nav-group {
+    padding: 12px 8px;
+}
 
-    a {
-        text-decoration: none;
-        color: #000;
+.group-title {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #64748b; /* slate-500 */
+    padding: 6px 8px;
+}
 
-        &:visited {
-            color: #000;
-        }
-    }
+.nav-group a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: #0f172a;
+    text-decoration: none;
+}
 
-    .brand {
-        img {
-            display: block;
-            height: 32px;
-            width: auto;
-        }
-    }
+.nav-group a mat-icon {
+    color: #7e57c2;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+}
+
+.nav-group a:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.nav-group a.active {
+    background: rgba(0, 0, 0, 0.08);
+    color: #0f172a;
+}
+
+.sidebar .spacer {
+    flex: 1 1 auto;
+}
+
+.nav-group.account {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.content {
+    flex: 1 1 auto;
+    background: #f8fafc; /* slate-50 */
+    min-width: 0;
+}
+
+.content > * {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
 }

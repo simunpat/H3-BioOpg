@@ -1,31 +1,76 @@
-<nav class="app-nav">
-    <div class="container">
-        <a routerLink="/" class="brand" aria-label="Home">
-            <img src="/logo.png" alt="Home" />
-        </a>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">
+            <a routerLink="/" aria-label="Home">
+                <img src="/logo.png" alt="Home" />
+            </a>
+        </div>
 
-        <span class="spacer"></span>
+        <nav class="nav-group">
+            <div class="group-title">General</div>
 
-        <ng-container *ngIf="auth.isAdmin()">
-            <a routerLink="/admin/movies">Movies</a>
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <mat-icon>home</mat-icon>
+                <span>Home</span>
+            </a>
+        </nav>
 
-            <a routerLink="/admin/screenings">Screenings</a>
+        <nav class="nav-group" *ngIf="auth.isAdmin()">
+            <div class="group-title">Admin</div>
 
-            <a routerLink="/admin/auditoriums">Auditoriums</a>
+            <a routerLink="/admin/movies" routerLinkActive="active">
+                <mat-icon>movie</mat-icon>
+                <span>Movies</span>
+            </a>
 
-            <a routerLink="/admin/users">Users</a>
+            <a routerLink="/admin/screenings" routerLinkActive="active">
+                <mat-icon>schedule</mat-icon>
+                <span>Screenings</span>
+            </a>
 
-            <a routerLink="/hack/sql">SQL Injection</a>
-        </ng-container>
+            <a routerLink="/admin/auditoriums" routerLinkActive="active">
+                <mat-icon>theaters</mat-icon>
+                <span>Auditoriums</span>
+            </a>
 
-        <a *ngIf="!auth.isAuthenticated()" routerLink="/register">Create Account</a>
+            <a routerLink="/admin/users" routerLinkActive="active">
+                <mat-icon>group</mat-icon>
+                <span>Users</span>
+            </a>
 
-        <a *ngIf="!auth.isAuthenticated()" routerLink="/login">Login</a>
+            <a routerLink="/hack/sql" routerLinkActive="active">
+                <mat-icon>code</mat-icon>
+                <span>SQL Injection</span>
+            </a>
+        </nav>
 
-        <a *ngIf="auth.isAuthenticated()" href="" (click)="$event.preventDefault(); auth.logout()"
-            >Logout</a
-        >
-    </div>
-</nav>
+        <div class="spacer"></div>
 
-<router-outlet />
+        <nav class="nav-group account">
+            <div class="group-title">Account</div>
+
+            <a *ngIf="!auth.isAuthenticated()" routerLink="/register" routerLinkActive="active">
+                <mat-icon>person_add</mat-icon>
+                <span>Create Account</span>
+            </a>
+
+            <a *ngIf="!auth.isAuthenticated()" routerLink="/login" routerLinkActive="active">
+                <mat-icon>login</mat-icon>
+                <span>Login</span>
+            </a>
+
+            <a
+                *ngIf="auth.isAuthenticated()"
+                href=""
+                (click)="$event.preventDefault(); auth.logout()"
+            >
+                <mat-icon>logout</mat-icon>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <router-outlet />
+    </main>
+</div>

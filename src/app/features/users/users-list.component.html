@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let u of users">
+            <tr *ngFor="let u of pagedUsers()">
                 <td>{{ u.email }}</td>
                 <td>{{ u.isAdmin ? 'Admin' : 'Customer' }}</td>
                 <td>
@@ -22,6 +22,22 @@
             </tr>
         </tbody>
     </table>
+    <div class="pager">
+        <button class="btn" type="button" [disabled]="pageIndex() === 0" (click)="prevPage()">
+            Prev
+        </button>
+
+        <span>Page {{ pageIndex() + 1 }} of {{ totalPages() }}</span>
+
+        <button
+            class="btn"
+            type="button"
+            [disabled]="pageIndex() >= totalPages() - 1"
+            (click)="nextPage()"
+        >
+            Next
+        </button>
+    </div>
 
     <div class="add-new--container">
         <a class="btn btn-primary" [routerLink]="['/admin/users/new']">Add New</a>

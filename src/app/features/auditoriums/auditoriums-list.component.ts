@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuditoriumsService } from '../../services/auditoriums.service';
@@ -22,13 +22,27 @@ export class AuditoriumsListComponent {
     protected readonly auditoriums = signal<Auditorium[]>([]);
     protected readonly displayedColumns = ['name', 'size', 'actions'];
     protected form: Partial<Auditorium> = { name: '', rows: 10, cols: 12 };
+    protected readonly pageSize = 10;
+    protected readonly pageIndex = signal(0);
+
+    protected readonly totalPages = computed(() =>
+        Math.max(1, Math.ceil(this.auditoriums().length / this.pageSize))
+    );
+
+    protected readonly pagedAuditoriums = computed(() => {
+        const start = this.pageIndex() * this.pageSize;
+        return this.auditoriums().slice(start, start + this.pageSize);
+    });
 
     constructor() {
         this.refresh();
     }
 
     refresh(): void {
-        this.service.list().subscribe((items) => this.auditoriums.set(items));
+        this.service.list().subscribe((items) => {
+            this.auditoriums.set(items);
+            this.pageIndex.set(0);
+        });
     }
 
     add(): void {
@@ -50,5 +64,18 @@ export class AuditoriumsListComponent {
 
     remove(id: string): void {
         this.service.delete(id).subscribe(() => this.refresh());
+    }
+
+    protected setPage(i: number): void {
+        const clamped = Math.max(0, Math.min(i, this.totalPages() - 1));
+        this.pageIndex.set(clamped);
+    }
+
+    protected prevPage(): void {
+        this.setPage(this.pageIndex() - 1);
+    }
+
+    protected nextPage(): void {
+        this.setPage(this.pageIndex() + 1);
     }
 }

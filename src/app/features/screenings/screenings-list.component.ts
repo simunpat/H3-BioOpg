@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -28,6 +28,17 @@ export class ScreeningsListComponent {
     protected sortBy: 'movie' | 'auditorium' | 'startTime' | 'price' = 'startTime';
     protected sortDir: 'asc' | 'desc' = 'asc';
     protected readonly sorted = signal<Screening[]>([]);
+    protected readonly pageSize = 10;
+    protected readonly pageIndex = signal(0);
+
+    protected readonly totalPages = computed(() =>
+        Math.max(1, Math.ceil(this.sorted().length / this.pageSize))
+    );
+
+    protected readonly pagedSorted = computed(() => {
+        const start = this.pageIndex() * this.pageSize;
+        return this.sorted().slice(start, start + this.pageSize);
+    });
 
     protected form: {
         movieId?: string;
@@ -44,6 +55,7 @@ export class ScreeningsListComponent {
         this.screeningsService.list().subscribe((items) => {
             this.screenings.set(items);
             this.applySort();
+            this.pageIndex.set(0);
         });
 
         this.moviesService.list().subscribe((items) => this.movies.set(items));
@@ -90,6 +102,18 @@ export class ScreeningsListComponent {
             this.sortDir = 'asc';
         }
         this.applySort();
+    }
+    protected setPage(i: number): void {
+        const clamped = Math.max(0, Math.min(i, this.totalPages() - 1));
+        this.pageIndex.set(clamped);
+    }
+
+    protected prevPage(): void {
+        this.setPage(this.pageIndex() - 1);
+    }
+
+    protected nextPage(): void {
+        this.setPage(this.pageIndex() + 1);
     }
 
     add(): void {

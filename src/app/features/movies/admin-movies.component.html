@@ -17,7 +17,7 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let m of movies()">
+            <tr *ngFor="let m of pagedMovies()">
                 <td>
                     <div class="image-container">
                         <img [src]="posterUrl(m)" [alt]="m.title + ' poster'" class="image" />
@@ -40,6 +40,23 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="pager">
+        <button class="btn" type="button" [disabled]="pageIndex() === 0" (click)="prevPage()">
+            Prev
+        </button>
+
+        <span>Page {{ pageIndex() + 1 }} of {{ totalPages() }}</span>
+
+        <button
+            class="btn"
+            type="button"
+            [disabled]="pageIndex() >= totalPages() - 1"
+            (click)="nextPage()"
+        >
+            Next
+        </button>
+    </div>
 
     <div class="add-new--container">
         <a class="btn btn-primary" [routerLink]="['/admin/movies/new']">Add New</a>

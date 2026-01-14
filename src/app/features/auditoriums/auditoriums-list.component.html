@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let a of auditoriums()">
+            <tr *ngFor="let a of pagedAuditoriums()">
                 <td>{{ a.name }}</td>
                 <td>{{ a.rows }} × {{ a.cols }}</td>
                 <td>
@@ -45,4 +45,20 @@
             </tr>
         </tbody>
     </table>
+    <div class="pager">
+        <button class="btn" type="button" [disabled]="pageIndex() === 0" (click)="prevPage()">
+            Prev
+        </button>
+
+        <span>Page {{ pageIndex() + 1 }} of {{ totalPages() }}</span>
+
+        <button
+            class="btn"
+            type="button"
+            [disabled]="pageIndex() >= totalPages() - 1"
+            (click)="nextPage()"
+        >
+            Next
+        </button>
+    </div>
 </section>

@@ -52,7 +52,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let s of sorted()">
+            <tr *ngFor="let s of pagedSorted()">
                 <td>{{ movieTitle(s.movieId) }}</td>
                 <td>{{ auditoriumName(s.auditoriumId) }}</td>
                 <td>{{ formatDateTime(s.startTime) }}</td>
@@ -65,4 +65,20 @@
             </tr>
         </tbody>
     </table>
+    <div class="pager">
+        <button class="btn" type="button" [disabled]="pageIndex() === 0" (click)="prevPage()">
+            Prev
+        </button>
+
+        <span>Page {{ pageIndex() + 1 }} of {{ totalPages() }}</span>
+
+        <button
+            class="btn"
+            type="button"
+            [disabled]="pageIndex() >= totalPages() - 1"
+            (click)="nextPage()"
+        >
+            Next
+        </button>
+    </div>
 </section>

@@ -32,11 +32,28 @@ make down        # stop services
 make clean       # stop & remove volumes (resets DB and uploaded files)
 ```
 
+Resilience:
+- The API ensures the Postgres `public` schema exists on startup and sets EF’s default schema to `public`, so `make up` and `make seed` work even if `public` was dropped.
+
 ## Project layout
 - Angular app: `src/`
 - API solution: `Backend/` (EF Core, repositories/services/controllers)
 - Upload server: `upload-server.js` (serves `uploads/`)
 - Compose & Make: `docker-compose.yml`, `Makefile`
+ 
+## Assignment compliance (H3)
+- Entities/classes (6–14): 8 domain entities: `Movie`, `Auditorium`, `Screening`, `User`, `Booking`, `BookingSeat`, `BookingItem`, `TicketType`.
+- Login: Implemented with JWT. API issues/validates tokens; Angular stores and uses JWT.
+- M–M represented: `Movie`–`Auditorium` via `Screening`; `Booking`–many seats via `BookingSeat`.
+- Klassediagram: Included below (Mermaid).
+- Use cases for a class: Provided for Booking below.
+- ORM and extra queries: EF Core used; stats endpoints perform multiple queries beyond CRUD.
+- SQL injection: Intentional lab endpoint `POST /hack/sql` executes raw SQL (education only).
+- Webserver: C# .NET 8, layered structure (Controllers → Services → Repositories → EF Core).
+- Interfaces between layers: Services/Repositories defined behind interfaces.
+- GUI: Angular app with auth guards/interceptor, admin area, booking flow.
+- Tests: Unit tests for controllers, services, and repositories in `Backend/BiografWeb.Test`.
+- Extra topics: Extension methods and delegates implemented in `Backend/BiografWeb.Domain/Extensions/StringExtensions.cs`.
 
 ## Backend details
 - Database: Postgres 16
@@ -51,7 +68,9 @@ make clean       # stop & remove volumes (resets DB and uploaded files)
   - `GET /api/users/byEmail?email=...`
   - `GET/POST/PUT/DELETE /api/bookings`
 
-Note: Authentication is currently mock on the frontend (unsigned JWT stored in `localStorage`). The API does not issue or validate JWTs yet.
+Authentication:
+- API issues and validates JWTs (HMAC SHA-256). Login via `POST /api/auth/login` with `{ "email": "", "password": "" }`.
+- Admin policy via `isAdmin` claim; protected routes enforced by JWT bearer auth.
 
 ## Frontend details
 - Dev server runs on http://localhost:4200 with a proxy (`proxy.conf.json`) to backend services:
@@ -63,6 +82,10 @@ Note: Authentication is currently mock on the frontend (unsigned JWT stored in `
   - `/screenings/:id/book` booking screen
   - `/login`, `/register`
   - `/admin/*` for Movies, Screenings, Auditoriums, Users (guarded by role Admin)
+ 
+Auth in Angular:
+- Stores JWT in `localStorage`, decodes payload for `isAuthenticated`, `isAdmin` guards.
+- HTTP interceptor attaches JWT to API requests.
 
 ## Upload server
 - Runs on port 3001
@@ -221,3 +244,23 @@ classDiagram
   1) Go to Admin → Movies → New → fill title/genre/duration → optionally upload poster → Save
 - Register and login
   1) Register with email/password → Login → access Admin (if admin)
+
+## Architecture & layers
+- Controllers (Web API) → Application services (interfaces) → Infrastructure repositories (interfaces) → EF Core (DbContext).
+- Interfaces: `Application/*/I*Service.cs`, `Application/*/I*Repository.cs`.
+- EF Core: `AppDbContext` with snake_case mapping and default schema `public`.
+- Migrations auto-applied on startup; seeding optional via env flags.
+
+## Testing
+- Controller tests (per entity), service tests, repository tests under `Backend/BiografWeb.Test`.
+- Test infra includes isolated DB setup and timestamp tests.
+
+## Security lab (SQL injection)
+- Endpoint: `POST /hack/sql` with body `{ "sql": "<your SQL>" }` executes raw SQL; returns rows/affected or error message.
+- For educational purposes only; do not enable in production.
+
+## Extras and ideas
+- Implement pagination for list endpoints and Angular tables.
+- Add breadcrumbs to key pages.
+- Showcase reflection/generics (e.g., simple validation via attributes + reflection).
+- Add screenshots or sequence/flow diagrams if desired.

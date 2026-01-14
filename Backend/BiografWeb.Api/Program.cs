@@ -88,6 +88,9 @@ var seedOnly = string.Equals(System.Environment.GetEnvironmentVariable("SEED_ONL
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    // Ensure 'public' schema exists even if it was dropped
+    db.Database.ExecuteSqlRaw("CREATE SCHEMA IF NOT EXISTS public");
     db.Database.Migrate();
 
     if (shouldSeed)

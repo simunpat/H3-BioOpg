@@ -191,3 +191,33 @@ classDiagram
 - View booking history
   - Actor: Authenticated user
   - Main flow: List user’s bookings with totals and next screening time
+
+## Handlingsoversigt (User Actions Overview)
+
+- Public
+  - Browse movies: view poster, title, genre, duration
+  - Movie details: see info and upcoming screenings
+  - Screening page: pick seats, see price
+- Authentication
+  - Register: create account with email + password
+  - Login/Logout: access protected routes
+- Booking
+  - Create booking: choose screening, select seats, select ticket types, confirm
+  - View booking (list in UI, via admin or future profile)
+  - Cancel/update booking (future enhancement)
+- Admin (requires Admin role)
+  - Movies: list, create, edit, delete; upload poster
+  - Screenings: list, create, edit, delete
+  - Auditoriums: list, create, edit, delete
+  - Users: list, create, edit, delete
+  - Stats (per entity): overview endpoints available in API
+- Experimental (for lab)
+  - SQL lab: run raw SQL (educational; not for production)
+
+### Typical flows
+- Create booking
+  1) Find movie → choose screening → select seats and ticket types → confirm
+- Add new movie (admin)
+  1) Go to Admin → Movies → New → fill title/genre/duration → optionally upload poster → Save
+- Register and login
+  1) Register with email/password → Login → access Admin (if admin)

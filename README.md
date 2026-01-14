@@ -80,3 +80,114 @@ dotnet restore Backend/BiografWeb.sln
 dotnet build Backend/BiografWeb.sln -c Debug
 dotnet run --project Backend/BiografWeb.Api/BiografWeb.Api.csproj
 ```
+
+### Class diagram
+
+```mermaid
+classDiagram
+    class Movie {
+      +Guid id
+      +string title
+      +int durationMin
+      +string genre
+      +string? posterUrl
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    class Auditorium {
+      +Guid id
+      +string name
+      +int rows
+      +int cols
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    class Screening {
+      +Guid id
+      +Guid movieId
+      +Guid auditoriumId
+      +DateTime startTime
+      +decimal price
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    class User {
+      +Guid id
+      +string email
+      +bool isAdmin
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    class Booking {
+      +Guid id
+      +Guid screeningId
+      +Guid userId
+      +decimal totalPrice
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    class BookingSeat {
+      +Guid bookingId
+      +int row
+      +int number
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    class BookingItem {
+      +Guid id
+      +Guid bookingId
+      +Guid ticketTypeId
+      +int qty
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    class TicketType {
+      +Guid id
+      +string name
+      +decimal multiplier
+      +DateTime createdAt
+      +DateTime updatedAt
+    }
+
+    Movie "1" <-- "many" Screening
+    Auditorium "1" <-- "many" Screening
+    Screening "1" <-- "many" Booking
+    User "1" <-- "many" Booking
+    Booking "1" <-- "many" BookingSeat
+    Booking "1" <-- "many" BookingItem
+    TicketType "1" <-- "many" BookingItem
+```
+
+### Use cases: Booking
+
+- Create booking
+  - Actor: Authenticated user
+  - Preconditions: Screening exists; seats available
+  - Main flow: Select seats and ticket quantities → system calculates total price → create booking
+  - Alternate/errors: Seat already taken → show error; invalid qty → reject
+  - Postconditions: Booking stored; seats reserved
+
+- Update booking items
+  - Actor: Authenticated user
+  - Preconditions: Booking belongs to user; screening not yet started
+  - Main flow: Adjust quantities → recalculate total → save
+  - Errors: Past start time → reject
+  - Postconditions: Updated totals persisted
+
+- Cancel booking
+  - Actor: Authenticated user or Admin
+  - Preconditions: Booking exists; within cancel window
+  - Main flow: Cancel/delete booking; release seats
+  - Errors: Too late → reject
+  - Postconditions: Seats released
+
+- View booking history
+  - Actor: Authenticated user
+  - Main flow: List user’s bookings with totals and next screening time

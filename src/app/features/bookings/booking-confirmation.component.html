@@ -1,0 +1,24 @@
+<section class="confirmation-page">
+    <ng-container *ngIf="booking() as b; else loadingTpl">
+        <h1>Thanks for your booking at <span class="brand">TecBio</span>!</h1>
+
+        <p class="lead">
+            You’ve bought <strong>{{ totalTickets() }}</strong> ticket<span
+                *ngIf="totalTickets() !== 1"
+                >s</span
+            >
+            for <strong>{{ movieTitle() }}</strong> in
+            <strong>{{ auditoriumName() || 'Auditorium' }}</strong> at
+            <strong>{{ startText() }}</strong
+            >.
+        </p>
+
+        <div class="actions">
+            <a class="btn btn-primary" [routerLink]="['/']">Browse more movies</a>
+        </div>
+    </ng-container>
+
+    <ng-template #loadingTpl>
+        <p>Finalizing your booking...</p>
+    </ng-template>
+</section>

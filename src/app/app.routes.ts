@@ -22,6 +22,13 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent, canActivate: [alreadyAuthGuard] },
     { path: 'movies/:id', component: MovieDetailComponent },
     { path: 'screenings/:id/book', component: BookingScreenComponent },
+    {
+        path: 'bookings/:id/confirmation',
+        loadComponent: () =>
+            import('./features/bookings/booking-confirmation.component').then(
+                (m) => m.BookingConfirmationComponent
+            ),
+    },
     { path: 'hack/sql', component: HackSqlComponent },
     {
         path: 'admin',

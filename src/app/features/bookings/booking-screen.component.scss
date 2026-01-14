@@ -2,6 +2,7 @@
     display: grid;
     gap: 6px;
     margin: 12px 0;
+    justify-content: center; /* center the grid horizontally */
 }
 
 .seat-btn {
@@ -78,4 +79,9 @@
 .btn-primary:hover {
     background: #125ea6;
     border-color: #125ea6;
+}
+
+.booking-page {
+    padding-left: 20px;
+    padding-right: 20px;
 }

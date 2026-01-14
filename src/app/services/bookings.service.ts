@@ -13,6 +13,10 @@ export class BookingsService {
         return this.http.get<Booking[]>(BASE_URL);
     }
 
+    get(id: string): Observable<Booking> {
+        return this.http.get<Booking>(`${BASE_URL}/${id}`);
+    }
+
     listByScreening(screeningId: string): Observable<Booking[]> {
         const params = new HttpParams().set('screeningId', screeningId);
         return this.http.get<Booking[]>(BASE_URL, { params });

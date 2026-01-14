@@ -10,6 +10,7 @@ import { AuthService } from '../../core/auth/auth.service';
 import { Screening } from '../../models/screening';
 import { Booking } from '../../models/booking';
 import { v4 as uuidv4 } from 'uuid';
+import { MoviesService } from '../../services/movies.service';
 
 type SeatCell = { id: string; auditoriumId: string; row: number; number: number };
 import { TicketTypesService } from '../../services/ticket-types.service';
@@ -29,6 +30,7 @@ export class BookingScreenComponent {
     private readonly auditoriumsService = inject(AuditoriumsService);
     private readonly bookingsService = inject(BookingsService);
     private readonly ticketTypesService = inject(TicketTypesService);
+    private readonly moviesService = inject(MoviesService);
     private readonly usersService = inject(UsersService);
     private readonly auth = inject(AuthService);
 
@@ -36,6 +38,8 @@ export class BookingScreenComponent {
     protected readonly seats = signal<SeatCell[]>([]);
     protected readonly occupiedSeatIds = signal<Set<string>>(new Set());
     protected readonly ticketTypes = signal<TicketType[]>([]);
+    protected readonly movieTitle = signal<string>('');
+    protected readonly auditoriumName = signal<string>('');
     protected typeCounts: Record<string, number> = {};
     protected cols = 12;
     private selected = new Set<string>();
@@ -56,6 +60,11 @@ export class BookingScreenComponent {
 
             if (!s) return;
 
+            // Load movie title
+            this.moviesService.get(s.movieId).subscribe((m) => {
+                this.movieTitle.set(m?.title ?? '');
+            });
+
             // Load ticket types and init counts
             this.ticketTypesService.list().subscribe((types) => {
                 this.ticketTypes.set(types);
@@ -71,6 +80,7 @@ export class BookingScreenComponent {
                 const aud = auds.find((a) => a.id === s.auditoriumId);
                 if (!aud) return;
                 this.cols = aud.cols;
+                this.auditoriumName.set(aud.name);
                 this.seats.set(this.generateSeats(aud.id, aud.rows, aud.cols));
             });
 
@@ -197,7 +207,7 @@ export class BookingScreenComponent {
             booking.totalPrice = this.totalPrice();
 
             this.bookingsService.create(booking).subscribe(() => {
-                void this.router.navigate(['/movies', s.movieId]);
+                void this.router.navigate(['/bookings', booking.id, 'confirmation']);
             });
         });
     }
@@ -207,6 +217,26 @@ export class BookingScreenComponent {
 
         if (Number.isNaN(d.getTime())) return iso;
 
-        return d.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short', hour12: false });
+        const date = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+
+        const time = d.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+        });
+
+        return `${date}, ${time}`;
+    }
+
+    ticketPriceFor(kind: 'adult' | 'child'): number {
+        const s = this.screening();
+
+        if (!s) return 0;
+
+        const t = this.ticketTypes().find((tt) => tt.name.toLowerCase().includes(kind));
+
+        if (!t) return 0;
+
+        return Math.round(s.price * t.multiplier);
     }
 }

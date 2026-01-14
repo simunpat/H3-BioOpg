@@ -1,16 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
 import { BookingsService } from '../../services/bookings.service';
 import { ScreeningsService } from '../../services/screenings.service';
 import { AuditoriumsService } from '../../services/auditoriums.service';
+import { MoviesService } from '../../services/movies.service';
 import { Booking } from '../../models/booking';
 import { Screening } from '../../models/screening';
+import { Movie } from '../../models/movie';
+import { User } from '../../models/user';
 type SeatCell = { id: string; auditoriumId: string; row: number; number: number };
 import { v4 as uuidv4 } from 'uuid';
 import { AuthService } from '../../core/auth/auth.service';
@@ -20,134 +19,101 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-bookings-list',
     standalone: true,
-    imports: [
-        CommonModule,
-        RouterModule,
-        FormsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatTableModule,
-    ],
-    template: `
-        <section>
-            <h1>Bookings</h1>
-            <form
-                (ngSubmit)="loadScreening()"
-                style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0;"
-            >
-                <mat-form-field appearance="outline">
-                    <mat-label>Screening ID</mat-label>
-
-                    <input matInput name="screeningId" [(ngModel)]="screeningId" required />
-                </mat-form-field>
-
-                <button mat-raised-button color="primary" type="submit">Load</button>
-            </form>
-
-            <div *ngIf="screening() as s">
-                <p>
-                    <strong>Screening:</strong> {{ s.movieId }} in {{ s.auditoriumId }} at
-                    {{ formatDateTime(s.startTime) }} — {{ s.price }} DKK
-                </p>
-
-                <div
-                    style="display:grid; gap:4px;"
-                    [style.gridTemplateColumns]="'repeat(' + cols + ', 32px)'"
-                >
-                    <button
-                        *ngFor="let seat of seats()"
-                        [style.width.px]="32"
-                        [style.height.px]="32"
-                        [style.background]="isSelected(seat.id) ? '#3f51b5' : '#e0e0e0'"
-                        [style.color]="isSelected(seat.id) ? 'white' : 'black'"
-                        (click)="toggleSeat(seat.id)"
-                        mat-button
-                    >
-                        {{ seat.row }}-{{ seat.number }}
-                    </button>
-                </div>
-
-                <div style="margin-top:8px;">
-                    <button mat-raised-button color="accent" (click)="confirm()">
-                        Confirm Booking
-                    </button>
-                </div>
-            </div>
-
-            <h2 style="margin-top:16px;">All Bookings</h2>
-
-            <table mat-table [dataSource]="bookings()" class="mat-elevation-z1" style="width:100%;">
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef>ID</th>
-
-                    <td mat-cell *matCellDef="let b">{{ b.id }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="screeningId">
-                    <th mat-header-cell *matHeaderCellDef>Screening</th>
-
-                    <td mat-cell *matCellDef="let b">{{ b.screeningId }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="userId">
-                    <th mat-header-cell *matHeaderCellDef>User</th>
-
-                    <td mat-cell *matCellDef="let b">{{ b.userId }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="seats">
-                    <th mat-header-cell *matHeaderCellDef>Seats</th>
-
-                    <td mat-cell *matCellDef="let b">{{ displaySeats(b) }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="price">
-                    <th mat-header-cell *matHeaderCellDef>Total</th>
-
-                    <td mat-cell *matCellDef="let b">{{ b.totalPrice }}</td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-        </section>
-    `,
+    imports: [CommonModule, RouterModule, FormsModule],
+    templateUrl: './bookings-list.component.html',
 })
 export class BookingsListComponent {
     private readonly bookingsService = inject(BookingsService);
     private readonly screeningsService = inject(ScreeningsService);
     private readonly auditoriumsService = inject(AuditoriumsService);
+    private readonly moviesService = inject(MoviesService);
     private readonly auth = inject(AuthService);
     private readonly usersService = inject(UsersService);
     private readonly router = inject(Router);
 
     protected readonly bookings = signal<Booking[]>([]);
     protected readonly screening = signal<Screening | null>(null);
+    protected readonly screeningsAll = signal<Screening[]>([]);
     protected readonly seats = signal<SeatCell[]>([]);
-    protected readonly displayedColumns = ['id', 'screeningId', 'userId', 'seats', 'price'];
+    protected readonly displayedColumns = ['movie', 'user', 'seats', 'price'];
+    protected readonly pageSize = 10;
+    protected readonly pageIndex = signal(0);
+
+    protected readonly totalPages = computed(() =>
+        Math.max(1, Math.ceil(this.bookings().length / this.pageSize))
+    );
+
+    protected readonly pagedBookings = computed(() => {
+        const start = this.pageIndex() * this.pageSize;
+        return this.bookings().slice(start, start + this.pageSize);
+    });
+
     protected screeningId = '';
     protected cols = 12;
     private selected = new Set<string>();
+    protected readonly movies = signal<Movie[]>([]);
+    protected readonly users = signal<User[]>([]);
 
     constructor() {
         this.reloadBookings();
+        // Preload lookups for nicer overview labels
+        this.moviesService.list().subscribe((items) => this.movies.set(items ?? []));
+        this.usersService.list().subscribe((items) => this.users.set(items ?? []));
+        this.screeningsService.list().subscribe((items) => this.screeningsAll.set(items ?? []));
     }
 
     reloadBookings(): void {
-        this.bookingsService.list().subscribe((items) => this.bookings.set(items));
+        this.bookingsService.list().subscribe((items) => {
+            this.bookings.set(items);
+            this.pageIndex.set(0);
+        });
+    }
+
+    remove(id: string): void {
+        this.bookingsService.delete(id).subscribe(() => this.reloadBookings());
+    }
+
+    protected setPage(i: number): void {
+        const clamped = Math.max(0, Math.min(i, this.totalPages() - 1));
+        this.pageIndex.set(clamped);
+    }
+
+    protected prevPage(): void {
+        this.setPage(this.pageIndex() - 1);
+    }
+
+    protected nextPage(): void {
+        this.setPage(this.pageIndex() + 1);
+    }
+
+    movieTitleForScreening(screeningId: string): string {
+        const s = this.screeningsAll().find((x) => x.id === screeningId);
+
+        if (!s) return screeningId;
+
+        const m = this.movies().find((mm) => mm.id === s.movieId);
+        return m?.title ?? s.movieId;
+    }
+
+    userEmail(userId: string): string {
+        const u = this.users().find((x) => x.id === userId);
+
+        return u?.email ?? userId;
     }
 
     loadScreening(): void {
         this.screeningsService.list().subscribe((list) => {
             const s = list.find((x) => x.id === this.screeningId) ?? null;
+
             this.screening.set(s);
+
             if (!s) return;
 
             this.auditoriumsService.list().subscribe((auds) => {
                 const aud = auds.find((a) => a.id === s.auditoriumId);
+
                 if (!aud) return;
+
                 this.cols = aud.cols;
                 this.seats.set(this.generateSeats(aud.id, aud.rows, aud.cols));
                 this.selected.clear();
@@ -157,6 +123,7 @@ export class BookingsListComponent {
 
     private generateSeats(auditoriumId: string, rows: number, cols: number): SeatCell[] {
         const result: SeatCell[] = [];
+
         for (let r = 1; r <= rows; r++) {
             for (let c = 1; c <= cols; c++) {
                 result.push({
@@ -167,6 +134,7 @@ export class BookingsListComponent {
                 });
             }
         }
+
         return result;
     }
 
@@ -185,8 +153,10 @@ export class BookingsListComponent {
         if (!s || this.selected.size === 0) return;
 
         const token = this.auth.getToken();
+
         if (!token) {
             void this.router.navigate(['/login']);
+
             return;
         }
 
@@ -194,6 +164,7 @@ export class BookingsListComponent {
         this.usersService.get(token.sub).subscribe((user) => {
             if (!user) {
                 this.auth.logout();
+
                 return;
             }
 
@@ -221,12 +192,15 @@ export class BookingsListComponent {
 
     displaySeats(b: Booking): string {
         const arr = b?.seats ?? [];
+
         return arr.map((x) => `${x.row}-${x.number}`).join(', ');
     }
 
     formatDateTime(iso: string): string {
         const d = new Date(iso);
+
         if (Number.isNaN(d.getTime())) return iso;
+
         return d.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short', hour12: false });
     }
 }

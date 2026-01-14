@@ -38,6 +38,7 @@ export const routes: Routes = [
             { path: 'movies', component: AdminMoviesComponent },
             { path: 'movies/new', component: AdminMovieFormComponent },
             { path: 'movies/:id/edit', component: AdminMovieFormComponent },
+            { path: 'bookings', component: BookingsListComponent },
             { path: 'auditoriums', component: AuditoriumsListComponent },
             { path: 'screenings', component: ScreeningsListComponent },
             { path: 'users', component: UsersListComponent },

@@ -1,21 +1,22 @@
-.PHONY: help up down restart logs logs-web ps rebuild-api urls open clean seed dotnet dotnet-restore dotnet-build
+.PHONY: help up down restart logs logs-web ps rebuild-api urls open clean seed dotnet dotnet-restore dotnet-build test
 
 help:
 	@echo "Available targets:"
-	@echo "  make up          - Start all services in detached mode and print URLs"
-	@echo "  make down        - Stop and remove containers, networks"
-	@echo "  make restart     - Restart all running services"
-	@echo "  make logs        - Tail logs for all services"
-	@echo "  make logs-web    - Tail logs for the web (Angular) service"
-	@echo "  make ps          - Show service status"
-	@echo "  make rebuild-api - Rebuild only the API image and restart it"
-	@echo "  make urls        - Print service URLs"
-	@echo "  make open        - Open key URLs in your browser (macOS)"
-	@echo "  make clean       - Down and remove volumes (DANGEROUS: wipes DB/uploads)"
-	@echo "  make seed        - Run migrations and seed DB in one-off API container"
-	@echo "  make dotnet      - Locally restore/build .NET
+	@echo "  make up         	 - Start all services in detached mode and print URLs"
+	@echo "  make down        	 - Stop and remove containers, networks"
+	@echo "  make restart     	 - Restart all running services"
+	@echo "  make logs        	 - Tail logs for all services"
+	@echo "  make logs-web   	 - Tail logs for the web (Angular) service"
+	@echo "  make ps          	 - Show service status"
+	@echo "  make rebuild-api 	 - Rebuild only the API image and restart it"
+	@echo "  make urls        	 - Print service URLs"
+	@echo "  make open        	 - Open key URLs in your browser (macOS)"
+	@echo "  make clean       	 - Down and remove volumes (DANGEROUS: wipes DB/uploads)"
+	@echo "  make seed        	 - Run migrations and seed DB in one-off API container"
+	@echo "  make dotnet      	 - Locally restore/build .NET"
 	@echo "  make dotnet-restore - dotnet restore Backend/BiografWeb.sln"
 	@echo "  make dotnet-build   - dotnet build Backend/BiografWeb.sln -c Debug"
+	@echo "  make test           - dotnet test Backend/BiografWeb.sln -c Debug"
 
 up:
 	@docker compose up -d --wait
@@ -79,4 +80,7 @@ dotnet-restore:
 
 dotnet-build:
 	@dotnet build Backend/BiografWeb.sln -c Debug
+
+test:
+	@dotnet test Backend/BiografWeb.sln -c Debug
 

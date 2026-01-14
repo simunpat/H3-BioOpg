@@ -92,10 +92,10 @@ public class MovieRepository : IMovieRepository
                     .OrderBy(s => s.StartTime)
                     .Select(s => (DateTime?)s.StartTime)
                     .FirstOrDefault(),
-                AveragePrice = _db.Screenings
+                AveragePrice = (decimal)((_db.Screenings
                     .Where(s => s.MovieId == m.Id)
-                    .Select(s => (decimal?)s.Price)
-                    .Average() ?? 0m
+                    .Select(s => (double?)s.Price)
+                    .Average()) ?? 0d)
             };
 
         return await query.ToListAsync(ct);

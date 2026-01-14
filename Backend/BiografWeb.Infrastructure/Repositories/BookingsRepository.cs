@@ -79,6 +79,8 @@ public class BookingsRepository(AppDbContext db) : IBookingsRepository
         _db.BookingItems.RemoveRange(b.Items);
         b.Seats = input.Seats;
         b.Items = input.Items;
+        _db.BookingSeats.AddRange(b.Seats);
+        _db.BookingItems.AddRange(b.Items);
 
         await _db.SaveChangesAsync(ct);
         return b;
@@ -175,11 +177,11 @@ public class BookingsRepository(AppDbContext db) : IBookingsRepository
             join i in _db.BookingItems on b.Id equals i.BookingId
             join s in _db.Screenings on b.ScreeningId equals s.Id
             join tt in _db.TicketTypes on i.TicketTypeId equals tt.Id
-            select (decimal)i.Qty * tt.Multiplier * s.Price;
+            select (double)i.Qty * (double)tt.Multiplier * (double)s.Price;
 
-        var sum = await query.SumAsync(ct);
+        var sumDouble = await query.SumAsync(ct);
 
-        return sum;
+        return (decimal)sumDouble;
     }
 }
 

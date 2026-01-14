@@ -21,7 +21,7 @@ public class HackController(AppDbContext db) : ControllerBase
             return BadRequest(new { error = "sql is required" });
         }
 
-        await using var connection = _db.Database.GetDbConnection();
+        var connection = _db.Database.GetDbConnection();
 
         if (connection.State != System.Data.ConnectionState.Open)
         {

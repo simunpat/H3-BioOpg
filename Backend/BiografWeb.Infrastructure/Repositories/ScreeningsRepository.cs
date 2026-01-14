@@ -124,20 +124,20 @@ public class ScreeningsRepository(AppDbContext db) : IScreeningsRepository
         var bookingIds = _db.Bookings.Where(b => b.ScreeningId == id).Select(b => b.Id);
         var bookedSeats = await _db.BookingSeats.CountAsync(bs => bookingIds.Contains(bs.BookingId), ct);
 
-        var price = await _db.Screenings.Where(s => s.Id == id).Select(s => s.Price).FirstAsync(ct);
+        var price = await _db.Screenings.Where(s => s.Id == id).Select(s => (double)s.Price).FirstAsync(ct);
 
-        var revenue = await (
+        var revenueDouble = await (
             from i in _db.BookingItems
             join tt in _db.TicketTypes on i.TicketTypeId equals tt.Id
             where bookingIds.Contains(i.BookingId)
-            select (decimal)i.Qty * tt.Multiplier * price
+            select (double)i.Qty * (double)tt.Multiplier * price
         ).SumAsync(ct);
 
         return new ScreeningDetailsStatsDto
         {
             Id = id,
             BookedSeats = bookedSeats,
-            RevenueEstimate = revenue
+            RevenueEstimate = (decimal)revenueDouble
         };
     }
 }

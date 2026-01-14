@@ -100,14 +100,14 @@ public class TicketTypesRepository(AppDbContext db) : ITicketTypesRepository
 
         foreach (var t in tts)
         {
-            var revenue = await (
+            var revenueDouble = await (
                 from i in _db.BookingItems
                 join b in _db.Bookings on i.BookingId equals b.Id
                 join s in _db.Screenings on b.ScreeningId equals s.Id
                 where i.TicketTypeId == t.Id
-                select (decimal)i.Qty * t.Multiplier * s.Price
+                select (double)i.Qty * (double)t.Multiplier * (double)s.Price
             ).SumAsync(ct);
-            result.Add(new TicketTypeRevenueDto { Id = t.Id, Name = t.Name, TotalRevenue = revenue });
+            result.Add(new TicketTypeRevenueDto { Id = t.Id, Name = t.Name, TotalRevenue = (decimal)revenueDouble });
         }
 
         return result;

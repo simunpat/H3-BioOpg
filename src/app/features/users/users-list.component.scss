@@ -12,31 +12,35 @@
 .table {
     width: 100%;
     border-collapse: collapse;
+}
 
-    th,
-    td {
-        vertical-align: middle;
-        padding: 0.5rem 0.625rem;
+.container {
+    .table {
+        th,
+        td {
+            vertical-align: middle;
+            padding: 0.5rem 0.625rem;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            height: 100%;
+        }
     }
 
-    .button-container {
+    .add-new--container {
+        margin-top: 1rem;
         display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        height: 100%;
+        justify-content: center;
     }
-}
 
-.add-new--container {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-}
-
-.pager {
-    margin: 12px 0;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: center;
+    .pager {
+        margin: 12px 0;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+    }
 }

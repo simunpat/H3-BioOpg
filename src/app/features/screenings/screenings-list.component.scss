@@ -48,24 +48,29 @@
     color: #fff;
     border-color: #1976d2;
 }
+
 .btn-primary:hover {
     background: #125ea6;
     border-color: #125ea6;
 }
+
 .btn-warn {
     background: #d32f2f;
     color: #fff;
     border-color: #d32f2f;
 }
+
 .btn-warn:hover {
     background: #b71c1c;
     border-color: #b71c1c;
 }
 
-.pager {
-    margin: 12px 0;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: center;
+.container {
+    .pager {
+        margin: 12px 0;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+    }
 }

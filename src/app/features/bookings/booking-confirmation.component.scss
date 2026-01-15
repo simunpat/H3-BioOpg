@@ -1,36 +1,25 @@
 .confirmation-page {
     padding: 80px 20px 24px;
-}
 
-.brand {
-    color: #1976d2;
-}
+    .brand {
+        color: #1976d2;
+    }
 
-.lead {
-    margin-top: 8px;
-    font-size: 16px;
-    color: #424242;
-}
+    .lead {
+        margin-top: 8px;
+        font-size: 16px;
+        color: #424242;
+    }
 
-.actions {
-    margin-top: 64px;
-    display: flex;
-    gap: 8px;
-}
+    .actions {
+        margin-top: 64px;
+        display: flex;
+        gap: 8px;
 
-.btn {
-    appearance: none;
-    border: 1px solid #e0e0e0;
-    background: #fff;
-    padding: 6px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-}
-
-.btn-primary {
-    background: #1976d2;
-    color: #fff;
-    border-color: #1976d2;
+        .btn-primary {
+            background: #1976d2;
+            color: #fff;
+            border-color: #1976d2;
+        }
+    }
 }

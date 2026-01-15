@@ -112,9 +112,9 @@ public static class ScreeningsSeeder
 
             foreach (var m in movies)
             {
-                // Deterministic selection: only "randomly" pick about half the movies
+                // Deterministic selection: pick about two-thirds of movies
                 var bytes = m.Id.ToByteArray();
-                var pick = (bytes[0] % 2) == 0;
+                var pick = (bytes[0] % 3) != 0; // ~66.7% selected
 
                 if (!pick) continue; // skip this movie (we don't select all)
 

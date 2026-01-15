@@ -1,0 +1,56 @@
+<section class="container my-bookings">
+    <h1 class="page-title">My bookings</h1>
+
+    <div class="state" *ngIf="isLoading()">Loading your bookings…</div>
+
+    <div class="state" *ngIf="!isLoading() && vm().length === 0">
+        <mat-icon aria-hidden="true">event_seat</mat-icon>
+
+        <div>
+            <div class="title">No bookings yet</div>
+
+            <div class="hint">Browse movies and pick a screening to book your seats.</div>
+
+            <a class="btn" routerLink="/">
+                <mat-icon class="icon" aria-hidden="true">movie</mat-icon>
+                Browse movies
+            </a>
+        </div>
+    </div>
+
+    <div class="cards" *ngIf="!isLoading() && vm().length > 0">
+        <article class="card" *ngFor="let b of vm()">
+            <div class="poster">
+                <img
+                    [src]="b.posterUrl || '/uploads/posters/template-poster.png'"
+                    [alt]="b.movieTitle + ' poster'"
+                />
+            </div>
+
+            <div class="body">
+                <div class="title-row">
+                    <h2 class="movie-title">{{ b.movieTitle }}</h2>
+
+                    <div class="price">DKK {{ b.totalPrice | number : '1.2-2' }}</div>
+                </div>
+
+                <div class="meta">
+                    <div class="meta-item">
+                        <mat-icon aria-hidden="true">schedule</mat-icon>
+
+                        <span>{{ b.startTimeFormatted }}</span>
+                    </div>
+                    <div class="meta-item" *ngIf="b.auditoriumName">
+                        <mat-icon aria-hidden="true">theaters</mat-icon>
+
+                        <span>{{ b.auditoriumName }}</span>
+                    </div>
+                </div>
+
+                <div class="seats">
+                    <span class="chip" *ngFor="let s of b.seatLabels">{{ s }}</span>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

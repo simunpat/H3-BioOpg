@@ -15,6 +15,7 @@ import { AdminMoviesComponent } from './features/movies/admin-movies.component';
 import { AdminMovieFormComponent } from './features/movies/admin-movie-form.component';
 import { UserFormComponent } from './features/users/user-form.component';
 import { HackSqlComponent } from './features/hack-sql/hack-sql.component';
+import { MyBookingsComponent } from './features/bookings/my-bookings.component';
 
 export const routes: Routes = [
     { path: '', component: MoviesBrowseComponent },
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent, canActivate: [alreadyAuthGuard] },
     { path: 'movies/:id', component: MovieDetailComponent },
     { path: 'screenings/:id/book', component: BookingScreenComponent },
+    { path: 'my/bookings', component: MyBookingsComponent, canActivate: [authGuard] },
     {
         path: 'bookings/:id/confirmation',
         loadComponent: () =>

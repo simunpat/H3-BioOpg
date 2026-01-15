@@ -54,6 +54,12 @@
         <nav class="nav-group account">
             <div class="group-title">Account</div>
 
+            <a *ngIf="auth.isAuthenticated()" routerLink="/my/bookings" routerLinkActive="active">
+                <mat-icon>event_seat</mat-icon>
+
+                <span>My bookings</span>
+            </a>
+
             <a *ngIf="!auth.isAuthenticated()" routerLink="/register" routerLinkActive="active">
                 <mat-icon>person_add</mat-icon>
                 <span>Create Account</span>
